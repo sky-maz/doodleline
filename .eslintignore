@@ -3,8 +3,11 @@ node_modules
 .vscode
 .next
 public
+sass
+.eslint*
+.prettier*
 next-env.d.ts
-package-lock.json
+package.json
 README.md
 tsconfig.json
 yarn.lock
