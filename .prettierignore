@@ -1,13 +1,8 @@
 node_modules
-.husky
-.vscode
-.next
+.*
 public
 sass
-.eslint*
-.prettier*
 next-env.d.ts
-package.json
-README.md
-tsconfig.json
+*.json
+*.md
 yarn.lock
