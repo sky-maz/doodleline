@@ -1,0 +1,22 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo 'Running pre-commit: Checking for format, linting, and types';
+
+# Checking prettier format
+yarn check:format || (
+  echo 'Review your files format. There was an issue.';
+  return false;
+);
+
+# Checking linting rules
+yarn check:lint || (
+  echo 'Review your linting rules. There was an issue.';
+  return false;
+);
+
+# Checking types rules
+yarn check:types || (
+  echo 'Review your typing rules. There was an issue.';
+  return false;
+);
