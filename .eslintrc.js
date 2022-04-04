@@ -4,9 +4,10 @@ module.exports = {
 		es2021: true,
 	},
 	extends: [
-		'next/core-web-vitals',
-		'plugin:react/recommended',
 		'google',
+		'next/core-web-vitals',
+		"plugin:@typescript-eslint/recommended",
+		'plugin:react/recommended',
 		'prettier',
 	],
 	parser: '@typescript-eslint/parser',
@@ -14,6 +15,8 @@ module.exports = {
 		ecmaFeatures: {
 			jsx: true,
 		},
+		project: "./tsconfig.json",
+    tsconfigRootDir: __dirname,
 		ecmaVersion: 'latest',
 		sourceType: 'module',
 	},
