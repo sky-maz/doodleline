@@ -3,6 +3,7 @@ node_modules
 public
 sass
 next-env.d.ts
+*.js
 *.json
 *.md
 yarn.lock

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -36,7 +36,7 @@
       ],
     },
   },
-  "include": ["next-env.d.ts", "src", "**/*.ts", "**/*.tsx", "pages"],
+  "include": ["next-env.d.ts", "src", "**/*.ts", "**/*.tsx", "pages", "jest.setup.js", "jest.config.js"],
   "exclude": ["node_modules"]
 }
 
