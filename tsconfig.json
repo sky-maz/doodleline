@@ -16,6 +16,9 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
+      "@styles/*":[
+        "./styles/*"
+      ],
       "@config/*": [
         "./src/core/config/*"
       ],
@@ -36,7 +39,7 @@
       ],
     },
   },
-  "include": ["next-env.d.ts", "src", "**/*.ts", "**/*.tsx", "pages", "jest.setup.js", "jest.config.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
 
