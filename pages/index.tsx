@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
 
+import HomeStyles from '@styles/home.styles';
 import baseTheme from '@config/theme';
 import useToggle from '@hooks/useToggle';
 import PracticeModal from 'src/layout/home/PracticeModal/PracticeModal';
@@ -19,13 +20,7 @@ const Home: NextPage = () => {
 			</Head>
 
 			<ThemeProvider theme={baseTheme}>
-				{/* <div className={styles.container}>
-					<main className={styles.main}>
-						<h1 className={styles.title} onClick={onToggle}>
-							Welcome to <a href='https://nextjs.org'>Next.js!</a>
-						</h1>
-					</main>
-				</div> */}
+				<HomeStyles>Supp</HomeStyles>
 				<PracticeModal
 					isOpen={value}
 					onClose={onToggle}
