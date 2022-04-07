@@ -26,7 +26,13 @@ const Home: NextPage = () => {
 						</h1>
 					</main>
 				</div> */}
-				<PracticeModal isOpen={value} onClose={onToggle} onSubmit={() => {}} />
+				<PracticeModal
+					isOpen={value}
+					onClose={onToggle}
+					onSubmit={() => {
+						console.log('Supp');
+					}}
+				/>
 			</ThemeProvider>
 		</>
 	);
