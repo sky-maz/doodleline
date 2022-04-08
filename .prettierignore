@@ -1,7 +1,7 @@
 node_modules
 .*
 public
-*.css
+*.scss
 next-env.d.ts
 *.js
 *.json

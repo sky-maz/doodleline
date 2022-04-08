@@ -32,5 +32,4 @@ const baseTheme: ITheme = {
 	},
 };
 
-export { ITheme };
 export default baseTheme;
