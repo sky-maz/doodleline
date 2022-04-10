@@ -1,15 +1,11 @@
+import styles from '@sass/Home.module.scss';
 import React from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import styles from '@sass/Home.module.scss';
-import baseTheme from '@config/theme';
-import useToggle from '@hooks/useToggle';
 // import PracticeModal from 'src/layout/home/PracticeModal/PracticeModal';
 
 const Home: NextPage = () => {
-	const { value, onToggle } = useToggle(true);
-
 	return (
 		<>
 			<Head>
