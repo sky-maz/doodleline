@@ -36,7 +36,7 @@
         "./src/layout/_common/*"
       ],
       "@components/*": [
-        "./src/layout/_common/*"
+        "./src/layout/*"
       ],
       "@utils/*": [
         "./src/utils/*"
