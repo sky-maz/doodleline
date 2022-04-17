@@ -17,3 +17,10 @@ export const timerOptions: SelectItem[] = [
 	{ name: '30 mins', value: '1800' },
 	{ name: '60 mins', value: '3600' },
 ];
+
+export const languageOptions: SelectItem[] = [
+	{ name: 'English', value: 'en' },
+	{ name: 'Español', value: 'sp' },
+];
+
+export const colorOptions: SelectItem[] = [];
