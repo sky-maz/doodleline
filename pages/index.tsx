@@ -1,19 +1,33 @@
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { Box, Flex } from '@chakra-ui/react';
+import {
+	Box,
+	Button,
+	Flex,
+	Modal,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
+	ModalOverlay,
+} from '@chakra-ui/react';
 
 import { Settings } from '@utils/constants';
-import { SideSettings, ReferencesCanvas } from '@components/home';
+import {
+	ReferencesCanvas,
+	SettingsModal,
+	CustomizeModal,
+	AboutModal,
+} from '@components/home';
+import useToggle from '@hooks/useToggle';
 
 /**
  *
  * TODOs:
- * CustomizeModal & HelpModal (WIP)
  * FooterControls onFinishCall (Pending)
  * ReferencesCanvas fit reference on div (Pending)
  * Responsive Design (Pending)
- * Custom themes light/dark (Pending)
+ * Custom theme colors & light/dark modes (Pending)
  * Localization en/sp (Pending)
  *
  **/
@@ -21,6 +35,9 @@ import { SideSettings, ReferencesCanvas } from '@components/home';
 const HomePage: NextPage = () => {
 	const [settings, setSettings] = useState<Settings>();
 	const [current, setCurrent] = useState<number>(0);
+	const { value: showSettings, onToggle: onToggleSettings } = useToggle();
+	const { value: showCustomize, onToggle: onToggleCustomize } = useToggle();
+	const { value: showAbout, onToggle: onToggleAbout } = useToggle(true);
 
 	const onPrevRef = () => {
 		if (current > 0) {
@@ -42,7 +59,7 @@ const HomePage: NextPage = () => {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<Flex direction='row' h='100vh' w='100vw'>
+			{/* <Flex direction='row' h='100vh' w='100vw'>
 				<Box flex={1} p={5} h='100%' w='100%'>
 					<SideSettings
 						onStart={(settings) => setSettings(settings)}
@@ -53,7 +70,14 @@ const HomePage: NextPage = () => {
 				<Box flex={2} p={5} h='100%' w='100%'>
 					<ReferencesCanvas imgs={settings?.imgs} current={current} />
 				</Box>
-			</Flex>
+			</Flex> */}
+			<SettingsModal
+				isOpen={showSettings}
+				onClose={onToggleSettings}
+				onStart={(settings) => setSettings(settings)}
+			/>
+			<CustomizeModal isOpen={showCustomize} onClose={onToggleCustomize} />
+			<AboutModal isOpen={showAbout} onClose={onToggleAbout} />
 		</>
 	);
 };
