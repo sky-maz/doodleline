@@ -15,6 +15,7 @@ import {
 import { Settings } from '@utils/constants';
 import {
 	ReferencesCanvas,
+	FooterControls,
 	SettingsModal,
 	CustomizeModal,
 	AboutModal,
@@ -37,7 +38,7 @@ const HomePage: NextPage = () => {
 	const [current, setCurrent] = useState<number>(0);
 	const { value: showSettings, onToggle: onToggleSettings } = useToggle();
 	const { value: showCustomize, onToggle: onToggleCustomize } = useToggle();
-	const { value: showAbout, onToggle: onToggleAbout } = useToggle(true);
+	const { value: showAbout, onToggle: onToggleAbout } = useToggle(false);
 
 	const onPrevRef = () => {
 		if (current > 0) {
@@ -59,18 +60,12 @@ const HomePage: NextPage = () => {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			{/* <Flex direction='row' h='100vh' w='100vw'>
-				<Box flex={1} p={5} h='100%' w='100%'>
-					<SideSettings
-						onStart={(settings) => setSettings(settings)}
-						onOpenHelp={() => console.log('Help')}
-						onOpenCustomize={() => console.log('Customize')}
-					/>
+			<Flex direction='column' h='100vh' w='100vw'>
+				<Box flex={1} bg='tomato'></Box>
+				<Box h='8em'>
+					<FooterControls onPrevRef={onPrevRef} onNextRef={onNextRef} />
 				</Box>
-				<Box flex={2} p={5} h='100%' w='100%'>
-					<ReferencesCanvas imgs={settings?.imgs} current={current} />
-				</Box>
-			</Flex> */}
+			</Flex>
 			<SettingsModal
 				isOpen={showSettings}
 				onClose={onToggleSettings}

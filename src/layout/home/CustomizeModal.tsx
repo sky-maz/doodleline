@@ -34,18 +34,18 @@ const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
 			isCentered={true}
 			colorScheme='teal'
 			motionPreset='slideInBottom'
-			size={isMd ? 'lg' : 'xl'}
+			size={isMd ? 'lg' : '4xl'}
 		>
 			<ModalOverlay />
 			<ModalContent
 				marginTop='0px'
 				marginBottom='0px'
 				alignSelf={{ base: 'flex-end', md: 'center' }}
-				borderRadius={{ base: '8px 8px 0px 0px', md: '8px' }}
+				borderRadius={{ base: '1em 1em 0px 0px', md: '1em' }}
 			>
 				<ModalHeader>Customize Settings</ModalHeader>
 				<ModalCloseButton />
-				<ModalBody display='flex' flexDir='column' gap='20px'>
+				<ModalBody display='flex' flexDir='column' gap='2em'>
 					<FormControl
 						display='flex'
 						alignItems='center'
@@ -55,7 +55,7 @@ const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
 							htmlFor='language'
 							display='flex'
 							alignItems='center'
-							gap='10px'
+							gap='1em'
 							margin={0}
 						>
 							<FaGlobe />
@@ -64,7 +64,7 @@ const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
 						<Select
 							id='language'
 							size='sm'
-							w='150px'
+							w='15em'
 							// value={type}
 							// onChange={(e) => setType(e.target.value)}
 						>
@@ -84,7 +84,7 @@ const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
 							htmlFor='theme-mode'
 							display='flex'
 							alignItems='center'
-							gap='10px'
+							gap='1em'
 							margin={0}
 						>
 							<CurrentMode />
@@ -97,7 +97,7 @@ const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
 							htmlFor='theme-color'
 							display='flex'
 							alignItems='center'
-							gap='10px'
+							gap='1em'
 							margin={0}
 						>
 							<FaPalette />

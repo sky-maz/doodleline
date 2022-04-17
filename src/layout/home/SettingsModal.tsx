@@ -65,17 +65,17 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 			closeOnOverlayClick={false}
 			colorScheme='teal'
 			motionPreset='slideInBottom'
-			size={isMd ? 'lg' : 'xl'}
+			size={isMd ? 'lg' : '4xl'}
 		>
 			<ModalOverlay />
 			<ModalContent
 				marginTop='0px'
 				marginBottom='0px'
 				alignSelf={{ base: 'flex-end', md: 'center' }}
-				borderRadius={{ base: '8px 8px 0px 0px', md: '8px' }}
+				borderRadius={{ base: '1em 1em 0px 0px', md: '1em' }}
 			>
 				<ModalHeader>Settings</ModalHeader>
-				<ModalBody display='flex' flexDir='column' gap='20px'>
+				<ModalBody display='flex' flexDir='column' gap='2em'>
 					<FormControl>
 						<FormLabel htmlFor='type'>Practice type</FormLabel>
 						<Select
@@ -125,7 +125,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 							<Button
 								as='span'
 								size='lg'
-								h='100px'
+								h='10em'
 								w='100%'
 								variant={hasFiles ? 'solid' : 'outline'}
 								colorScheme={hasFiles ? 'green' : undefined}
@@ -144,7 +144,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 							display='flex'
 							alignItems='center'
 							justifyContent='space-between'
-							margin='0px'
+							margin='0em'
 						>
 							<Text>Shuffle references</Text>
 							<Checkbox

@@ -32,7 +32,7 @@ const AboutModal: FC<IAboutModal> = ({ isOpen, onClose }) => {
 			isCentered={true}
 			colorScheme='teal'
 			motionPreset='slideInBottom'
-			size={isMd ? 'lg' : 'xl'}
+			size={isMd ? 'lg' : '4xl'}
 			scrollBehavior='inside'
 		>
 			<ModalOverlay />
@@ -40,20 +40,25 @@ const AboutModal: FC<IAboutModal> = ({ isOpen, onClose }) => {
 				marginTop='0px'
 				marginBottom='0px'
 				alignSelf={{ base: 'flex-end', md: 'center' }}
-				borderRadius={{ base: '8px 8px 0px 0px', md: '8px' }}
+				borderRadius={{ base: '1em 1em 0px 0px', md: '1em' }}
 			>
 				<ModalHeader />
 				<ModalCloseButton />
 				<ModalBody>
-					<Flex alignItems='flex-start' justifyContent='center' gap='20px'>
-						<Flex flex='1' flexDir='column' gap='20px'>
+					<Flex
+						flexDir={isMd ? 'row' : 'column'}
+						alignItems='flex-start'
+						justifyContent='center'
+						gap='2em'
+					>
+						<Flex flex='1' flexDir='column' gap='2em'>
 							<Heading size='md'>Instructions</Heading>
 							<Text fontSize='md' textAlign='justify'>
 								......
 							</Text>
 						</Flex>
 						<Divider orientation='vertical' />
-						<Flex flex='1' flexDir='column' gap='20px'>
+						<Flex flex='1' flexDir='column' gap='2em'>
 							<Heading size='md'>Shortcuts</Heading>
 							<span>
 								<Kbd>shift</Kbd> + <Kbd>H</Kbd>
@@ -68,9 +73,9 @@ const AboutModal: FC<IAboutModal> = ({ isOpen, onClose }) => {
 					display='flex'
 					flexDir='column'
 					justifyContent='center'
-					gap='10px'
+					gap='1em'
 				>
-					<Flex gap='20px'>
+					<Flex gap='2em'>
 						<IconButton
 							isRound
 							aria-label='discord link'
