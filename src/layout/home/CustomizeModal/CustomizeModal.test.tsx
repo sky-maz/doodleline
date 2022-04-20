@@ -1,5 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { ChakraProvider } from '@chakra-ui/react';
+import defaultTheme from '@config/theme';
 import CustomizeModal from './CustomizeModal';
 
 let isMobile = [false];
@@ -20,7 +22,11 @@ describe('<CustomizeModal /> component ', () => {
 		isMobile = [true];
 
 		// Execute
-		const view = render(<CustomizeModal isOpen={true} onClose={onCloseMock} />);
+		const view = render(
+			<ChakraProvider theme={defaultTheme}>
+				<CustomizeModal isOpen={true} onClose={onCloseMock} />
+			</ChakraProvider>
+		);
 
 		// Validation
 		expect(view).toMatchSnapshot();
@@ -32,7 +38,11 @@ describe('<CustomizeModal /> component ', () => {
 		isMobile = [false];
 
 		// Execute
-		const view = render(<CustomizeModal isOpen={true} onClose={onCloseMock} />);
+		const view = render(
+			<ChakraProvider theme={defaultTheme}>
+				<CustomizeModal isOpen={true} onClose={onCloseMock} />
+			</ChakraProvider>
+		);
 
 		// Validation
 		expect(view).toMatchSnapshot();
@@ -45,7 +55,11 @@ describe('<CustomizeModal /> component ', () => {
 		isMobile = [false];
 
 		// Execute
-		const view = render(<CustomizeModal isOpen={true} onClose={onCloseMock} />);
+		const view = render(
+			<ChakraProvider theme={defaultTheme}>
+				<CustomizeModal isOpen={true} onClose={onCloseMock} />
+			</ChakraProvider>
+		);
 
 		// Validation
 		const languageSelector = screen.getByTestId('language-selector');

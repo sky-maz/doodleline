@@ -1,5 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { ChakraProvider } from '@chakra-ui/react';
+import defaultTheme from '@config/theme';
 import AboutModal from './AboutModal';
 
 let isMobile = [false];
@@ -20,7 +22,11 @@ describe('<AboutModal /> component ', () => {
 		isMobile = [true];
 
 		// Execute
-		const view = render(<AboutModal isOpen={true} onClose={onCloseMock} />);
+		const view = render(
+			<ChakraProvider theme={defaultTheme}>
+				<AboutModal isOpen={true} onClose={onCloseMock} />
+			</ChakraProvider>
+		);
 
 		// Validation
 		expect(view).toMatchSnapshot();
@@ -32,19 +38,11 @@ describe('<AboutModal /> component ', () => {
 		isMobile = [false];
 
 		// Execute
-		const view = render(<AboutModal isOpen={true} onClose={onCloseMock} />);
-
-		// Validation
-		expect(view).toMatchSnapshot();
-	});
-
-	it('should be hidden if isOpen=false', () => {
-		// Setup
-		const onCloseMock = jest.fn();
-		isMobile = [false];
-
-		// Execute
-		const view = render(<AboutModal isOpen={false} onClose={onCloseMock} />);
+		const view = render(
+			<ChakraProvider theme={defaultTheme}>
+				<AboutModal isOpen={true} onClose={onCloseMock} />
+			</ChakraProvider>
+		);
 
 		// Validation
 		expect(view).toMatchSnapshot();

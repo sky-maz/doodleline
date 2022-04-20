@@ -80,6 +80,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 						<FormLabel htmlFor='type'>Practice type</FormLabel>
 						<Select
 							id='type'
+							data-testid='type-selector'
 							size='lg'
 							value={type}
 							onChange={(e) => setType(e.target.value)}
@@ -95,6 +96,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 						<FormLabel htmlFor='timer'>Timer</FormLabel>
 						<Select
 							id='timer'
+							data-testid='timer-selector'
 							size='lg'
 							value={timer}
 							onChange={(e) => setTimer(e.target.value)}
@@ -110,6 +112,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 						<input
 							multiple
 							id='references'
+							data-testid='references-loader'
 							accept='image/*'
 							type='file'
 							style={{ display: 'none' }}
@@ -149,6 +152,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 							<Text>Shuffle references</Text>
 							<Checkbox
 								id='random'
+								data-testid='shuffle-checkbox'
 								colorScheme='teal'
 								checked={shuffle}
 								onChange={() => setShuffle(!shuffle)}
@@ -157,7 +161,12 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 					</FormControl>
 				</ModalBody>
 				<ModalFooter>
-					<Button colorScheme='teal' isFullWidth onClick={onSubmit}>
+					<Button
+						data-testid='settings-start'
+						colorScheme='teal'
+						isFullWidth
+						onClick={onSubmit}
+					>
 						Start!
 					</Button>
 				</ModalFooter>
