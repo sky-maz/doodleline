@@ -11,7 +11,8 @@
     "check:lint": "eslint . --ext ts --ext tsx",
     "check:types": "tsc --pretty --noEmit",
     "check:all": "yarn check:format && yarn check:lint && yarn check:types",
-    "test:jest": "jest --coverage"
+    "test:snapshots": "jest -u",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.8",

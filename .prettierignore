@@ -1,6 +1,8 @@
+__snapshots__
 node_modules
-.*
+coverage
 public
+.*
 *.scss
 next-env.d.ts
 *.js

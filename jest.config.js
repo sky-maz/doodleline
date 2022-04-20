@@ -5,9 +5,17 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig = {
+	testEnvironment: 'jest-environment-jsdom',
+	rootDir: './',
 	setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
 	moduleDirectories: ['node_modules', '<rootDir>/'],
-	testEnvironment: 'jest-environment-jsdom',
+	coverageThreshold: {
+		global: {
+			branches: 80,
+			functions: 80,
+			lines: 80,
+		}
+	}
 };
 
 module.exports = createJestConfig(customJestConfig);
