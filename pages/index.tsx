@@ -37,8 +37,8 @@ const HomePage: NextPage = () => {
 	const [settings, setSettings] = useState<Settings>();
 	const [current, setCurrent] = useState<number>(0);
 	const { value: showSettings, onToggle: onToggleSettings } = useToggle();
-	const { value: showCustomize, onToggle: onToggleCustomize } = useToggle();
-	const { value: showAbout, onToggle: onToggleAbout } = useToggle(false);
+	const { value: showCustomize, onToggle: onToggleCustomize } = useToggle(true);
+	const { value: showAbout, onToggle: onToggleAbout } = useToggle();
 
 	const onPrevRef = () => {
 		if (current > 0) {

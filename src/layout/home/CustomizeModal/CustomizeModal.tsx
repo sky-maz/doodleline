@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import {
 	useMediaQuery,
 	Modal,
@@ -25,7 +25,9 @@ interface ICustomizeModal {
 
 const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
 	const [isMd] = useMediaQuery('(min-width: 768px)');
-	const CurrentMode = true ? FaSun : FaMoon;
+	const [language, setLanguage] = useState<string>('en');
+	const [mode, setMode] = useState<boolean>(false);
+	const CurrentMode = mode ? FaSun : FaMoon;
 
 	return (
 		<Modal
@@ -63,13 +65,18 @@ const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
 						</FormLabel>
 						<Select
 							id='language'
+							data-testid='language-selector'
 							size='sm'
 							w='15em'
-							// value={type}
-							// onChange={(e) => setType(e.target.value)}
+							value={language}
+							onChange={(e) => setLanguage(e.target.value)}
 						>
 							{languageOptions.map((opt) => (
-								<option key={opt.value} value={opt.value}>
+								<option
+									key={opt.value}
+									data-testid={`language-option-${opt.value}`}
+									value={opt.value}
+								>
 									{opt.name}
 								</option>
 							))}
@@ -90,7 +97,12 @@ const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
 							<CurrentMode />
 							<Text>Theme Mode</Text>
 						</FormLabel>
-						<Switch id='theme-mode' />
+						<Switch
+							id='theme-mode'
+							data-testid='mode-switch'
+							checked={mode}
+							onChange={() => setMode(!mode)}
+						/>
 					</FormControl>
 					<FormControl>
 						<FormLabel

@@ -1,7 +1,7 @@
 import ReferencesCanvas from './ReferencesCanvas';
 import FooterControls from './FooterControls';
 import SettingsModal from './SettingsModal';
-import CustomizeModal from './CustomizeModal';
+import CustomizeModal from './CustomizeModal/CustomizeModal';
 import AboutModal from './AboutModal/AboutModal';
 
 export {

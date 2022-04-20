@@ -26,9 +26,6 @@
       "@config/*": [
         "./src/core/config/*"
       ],
-      "@constants/*": [
-        "./src/core/constants/*"
-      ],
       "@hooks/*": [
         "./src/core/hooks/*"
       ],

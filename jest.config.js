@@ -8,12 +8,16 @@ const customJestConfig = {
 	testEnvironment: 'jest-environment-jsdom',
 	rootDir: './',
 	setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-	moduleDirectories: ['node_modules', '<rootDir>/'],
+	moduleDirectories: ['node_modules', 'src'],
+  moduleNameMapper: {
+  	'@utils/(.*)': '<rootDir>/src/utils/$1'
+  },
 	coverageThreshold: {
 		global: {
-			branches: 80,
-			functions: 80,
-			lines: 80,
+			statements: 90,
+			branches: 90,
+			functions: 90,
+			lines: 90,
 		}
 	}
 };
