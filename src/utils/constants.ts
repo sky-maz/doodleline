@@ -16,7 +16,7 @@ export const timerOptions: SelectItem[] = [
 	{ name: '10 mins', value: '600' },
 	{ name: '30 mins', value: '1800' },
 	{ name: '60 mins', value: '3600' },
-	{ name: 'Free', value: '-1' },
+	{ name: 'Free', value: '0' },
 ];
 
 export const languageOptions: SelectItem[] = [

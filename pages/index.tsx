@@ -1,16 +1,7 @@
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import {
-	Box,
-	Button,
-	Flex,
-	Modal,
-	ModalContent,
-	ModalFooter,
-	ModalHeader,
-	ModalOverlay,
-} from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 
 import { Settings } from '@utils/constants';
 import {
@@ -25,9 +16,7 @@ import useToggle from '@hooks/useToggle';
 /**
  *
  * TODOs:
- * FooterControls onFinishCall (Pending)
  * ReferencesCanvas fit reference on div (Pending)
- * Responsive Design (Pending)
  * Custom theme colors & light/dark modes (Pending)
  * Localization en/sp (Pending)
  *
@@ -36,8 +25,8 @@ import useToggle from '@hooks/useToggle';
 const HomePage: NextPage = () => {
 	const [settings, setSettings] = useState<Settings>();
 	const [current, setCurrent] = useState<number>(0);
-	const { value: showSettings, onToggle: onToggleSettings } = useToggle();
-	const { value: showCustomize, onToggle: onToggleCustomize } = useToggle(true);
+	const { value: showSettings, onToggle: onToggleSettings } = useToggle(true);
+	const { value: showCustomize, onToggle: onToggleCustomize } = useToggle();
 	const { value: showAbout, onToggle: onToggleAbout } = useToggle();
 
 	const onPrevRef = () => {
@@ -63,7 +52,13 @@ const HomePage: NextPage = () => {
 			<Flex direction='column' h='100vh' w='100vw'>
 				<Box flex={1} bg='tomato'></Box>
 				<Box h='8em'>
-					<FooterControls onPrevRef={onPrevRef} onNextRef={onNextRef} />
+					<FooterControls
+						threshold={settings?.timer ?? 0}
+						onToggleCustomize={onToggleCustomize}
+						onToggleAbout={onToggleAbout}
+						onPrevRef={onPrevRef}
+						onNextRef={onNextRef}
+					/>
 				</Box>
 			</Flex>
 			<SettingsModal

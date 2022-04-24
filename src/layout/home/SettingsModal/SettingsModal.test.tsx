@@ -124,7 +124,7 @@ describe('<SettingsModal /> component ', () => {
 		const onCloseMock = jest.fn();
 		const onStartMock = jest.fn();
 		const typeValue = 'STRATEGIC';
-		const timerValue = '-1';
+		const timerValue = '30';
 		const filesValue = getFileList();
 		isMobile = [false];
 

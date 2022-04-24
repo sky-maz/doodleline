@@ -11,6 +11,7 @@ const customJestConfig = {
 	moduleDirectories: ['node_modules', 'src'],
 	moduleNameMapper: {
 		'@config/(.*)': '<rootDir>/src/core/config/$1',
+		'@hooks/(.*)': '<rootDir>/src/core/hooks/$1',
   	'@utils/(.*)': '<rootDir>/src/utils/$1'
   },
 	coverageThreshold: {

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Text, Progress, Stack, IconButton, Flex } from '@chakra-ui/react';
+import { Text, Progress, IconButton, Flex } from '@chakra-ui/react';
 import {
 	FaStepBackward,
 	FaStepForward,
@@ -12,13 +12,20 @@ import useDebounce from '@hooks/useDebounce';
 import { asTime } from '@utils/convert';
 
 interface IFooterControls {
-	threshold?: number;
+	threshold: number;
+	onToggleCustomize: () => void;
+	onToggleAbout: () => void;
 	onPrevRef: () => void;
 	onNextRef: () => void;
 }
 
-const FooterControls: FC<IFooterControls> = (props) => {
-	const { threshold, onPrevRef, onNextRef } = props;
+const FooterControls: FC<IFooterControls> = ({
+	threshold,
+	onToggleCustomize,
+	onToggleAbout,
+	onPrevRef,
+	onNextRef,
+}) => {
 	const [timer, setTimer] = useState<number>(0);
 	const [isPaused, setIsPaused] = useState<boolean>(true);
 
@@ -53,42 +60,51 @@ const FooterControls: FC<IFooterControls> = (props) => {
 			<Flex flex='1' justify='center'>
 				<IconButton
 					isRound
+					data-testid='customize-btn'
 					aria-label='customize-settings'
 					size='md'
 					icon={<FaCog />}
+					onClick={onToggleCustomize}
 				/>
 			</Flex>
 			<Flex flex='2' flexDir='column' justify='stretch' gap={4}>
 				<Flex align='center' justify='center' gap={2}>
-					<Text fontSize='sm'>{asTime(timer)}</Text>
+					<Text data-testid='timer-span' fontSize='sm'>
+						{asTime(timer)}
+					</Text>
 					<Progress
 						colorScheme='teal'
 						size='sm'
 						width='100%'
 						borderRadius='5px'
-						value={(timer / (threshold ?? 1)) * 100}
+						value={(timer / threshold) * 100}
 					/>
-					<Text fontSize='sm'>{asTime(threshold ?? 0)}</Text>
+					<Text fontSize='sm'>{asTime(threshold)}</Text>
 				</Flex>
 				<Flex align='center' justify='center' gap={4}>
 					<IconButton
 						isRound
+						data-testid='prev-btn'
 						aria-label='previous-reference'
 						colorScheme='teal'
 						size='md'
 						icon={<FaStepBackward />}
 						onClick={onPrev}
 					/>
+					{threshold > 0 && (
+						<IconButton
+							isRound
+							data-testid='play-btn'
+							aria-label={isPaused ? 'play' : 'pause'}
+							colorScheme='teal'
+							size='lg'
+							icon={isPaused ? <FaPlay /> : <FaPause />}
+							onClick={() => setIsPaused(!isPaused)}
+						/>
+					)}
 					<IconButton
 						isRound
-						aria-label={isPaused ? 'play' : 'pause'}
-						colorScheme='teal'
-						size='lg'
-						icon={isPaused ? <FaPlay /> : <FaPause />}
-						onClick={() => setIsPaused(!isPaused)}
-					/>
-					<IconButton
-						isRound
+						data-testid='next-btn'
 						aria-label='next-reference'
 						colorScheme='teal'
 						size='md'
@@ -100,55 +116,14 @@ const FooterControls: FC<IFooterControls> = (props) => {
 			<Flex flex='1' justify='center'>
 				<IconButton
 					isRound
-					aria-label='customize-settings'
+					data-testid='about-btn'
+					aria-label='about-app'
 					size='md'
 					icon={<FaQuestion />}
+					onClick={onToggleAbout}
 				/>
 			</Flex>
 		</Flex>
-		// <>
-		// 	<Stack direction='row' align='center' justify='center' spacing={4}>
-		// 		<Text color='brand.color' fontSize='sm'>
-		// 			{asTime(timer)}
-		// 		</Text>
-		// 		<Progress
-		// 			colorScheme='teal'
-		// 			size='sm'
-		// 			width='250px'
-		// 			borderRadius='5px'
-		// 			value={(timer / (threshold ?? 1)) * 100}
-		// 		/>
-		// 		<Text color='brand.color' fontSize='sm'>
-		// 			{asTime(threshold ?? 0)}
-		// 		</Text>
-		// 	</Stack>
-		// 	<Stack direction='row' align='center' justify='center' spacing={4}>
-		// 		<IconButton
-		// 			isRound
-		// 			aria-label='previous-reference'
-		// 			colorScheme='teal'
-		// 			size='md'
-		// 			icon={<FaStepBackward />}
-		// 			onClick={onPrev}
-		// 		/>
-		// 		<IconButton
-		// 			isRound
-		// 			aria-label={isPaused ? 'play' : 'pause'}
-		// 			colorScheme='teal'
-		// 			size='lg'
-		// 			icon={isPaused ? <FaPlay /> : <FaPause />}
-		// 			onClick={() => setIsPaused(!isPaused)}
-		// 		/>
-		// 		<IconButton
-		// 			isRound
-		// 			aria-label='next-reference'
-		// 			colorScheme='teal'
-		// 			size='md'
-		// 			icon={<FaStepForward />}
-		// 			onClick={onNext}
-		// 		/>
-		// 	</Stack>
-		// </>
 	);
 };
 
