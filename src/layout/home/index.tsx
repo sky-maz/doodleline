@@ -1,4 +1,4 @@
-import ReferencesCanvas from './ReferencesCanvas';
+import ReferencesCanvas from './ReferenceCanvas/ReferencesCanvas';
 import FooterControls from './FooterControls/FooterControls';
 import SettingsModal from './SettingsModal/SettingsModal';
 import CustomizeModal from './CustomizeModal/CustomizeModal';

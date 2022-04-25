@@ -1,5 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Flex, useEventListener } from '@chakra-ui/react';
+import {
+	Box,
+	Flex,
+	Slider,
+	SliderFilledTrack,
+	SliderThumb,
+	SliderTrack,
+	useEventListener,
+} from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 
 import { setReader } from '@utils/reader';
@@ -9,8 +17,7 @@ interface IReferencesCanvas {
 	current: number;
 }
 
-const ReferencesCanvas: FC<IReferencesCanvas> = (props) => {
-	const { imgs, current } = props;
+const ReferencesCanvas: FC<IReferencesCanvas> = ({ imgs, current }) => {
 	const [zoom, setZoom] = useState<number>(1.0);
 	const refCanvasId = 'reference-item';
 	const zoomStep = 0.2;
@@ -20,7 +27,7 @@ const ReferencesCanvas: FC<IReferencesCanvas> = (props) => {
 			case '-':
 				setZoom(zoom - zoomStep);
 				return;
-			case '+':
+			case '=':
 				setZoom(zoom + zoomStep);
 				return;
 			default:
@@ -36,16 +43,20 @@ const ReferencesCanvas: FC<IReferencesCanvas> = (props) => {
 	}, [imgs, current]);
 
 	return (
-		<Flex h='100%' w='100%' align='center' justify='center' overflow='hidden'>
-			{props.imgs && (
-				<motion.img
+		<Flex flex='1' align='center' justify='center' overflow='hidden'>
+			{imgs && (
+				<Box
+					as={motion.img}
 					id={refCanvasId}
+					src='/example.jpeg'
 					alt='Reference'
 					drag
 					dragMomentum={false}
 					animate={{ scale: zoom }}
-					height='auto'
-					width='auto'
+					h='auto'
+					w='auto'
+					maxH='100%'
+					maxW='100%'
 				/>
 			)}
 		</Flex>

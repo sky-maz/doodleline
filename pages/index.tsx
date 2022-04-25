@@ -16,7 +16,6 @@ import useToggle from '@hooks/useToggle';
 /**
  *
  * TODOs:
- * ReferencesCanvas fit reference on div (Pending)
  * Custom theme colors & light/dark modes (Pending)
  * Localization en/sp (Pending)
  *
@@ -50,8 +49,10 @@ const HomePage: NextPage = () => {
 			</Head>
 
 			<Flex direction='column' h='100vh' w='100vw'>
-				<Box flex={1} bg='tomato'></Box>
-				<Box h='8em'>
+				<Flex h='calc(100vh - 8em)' w='100vw' gap='1em'>
+					<ReferencesCanvas current={current} imgs={settings?.imgs} />
+				</Flex>
+				<Box h='8em' w='100vw' border='1px solid grey'>
 					<FooterControls
 						threshold={settings?.timer ?? 0}
 						onToggleCustomize={onToggleCustomize}
