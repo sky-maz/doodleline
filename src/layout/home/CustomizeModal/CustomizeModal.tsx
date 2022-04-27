@@ -16,7 +16,7 @@ import {
 	Button,
 } from '@chakra-ui/react';
 import { FaGlobe, FaMoon, FaPalette, FaSun } from 'react-icons/fa';
-import { languageOptions } from '@utils/constants';
+import { languageOptions } from '@constants/home';
 
 interface ICustomizeModal {
 	isOpen: boolean;

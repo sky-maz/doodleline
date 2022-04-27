@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Box, Flex } from '@chakra-ui/react';
-
-import { Settings } from '@utils/constants';
+import useToggle from '@hooks/useToggle';
 import {
 	ReferencesCanvas,
 	FooterControls,
@@ -11,16 +10,8 @@ import {
 	CustomizeModal,
 	AboutModal,
 } from '@components/home';
-import useToggle from '@hooks/useToggle';
 
-/**
- *
- * TODOs:
- * Custom theme colors & light/dark modes (Pending)
- * Localization en/sp (Pending)
- *
- **/
-
+type Settings = { type: string; timer: number; imgs: File[] };
 const HomePage: NextPage = () => {
 	const [settings, setSettings] = useState<Settings>();
 	const [current, setCurrent] = useState<number>(0);
@@ -65,7 +56,7 @@ const HomePage: NextPage = () => {
 			<SettingsModal
 				isOpen={showSettings}
 				onClose={onToggleSettings}
-				onStart={(settings) => setSettings(settings)}
+				onStart={(type, timer, imgs) => setSettings({ type, timer, imgs })}
 			/>
 			<CustomizeModal isOpen={showCustomize} onClose={onToggleCustomize} />
 			<AboutModal isOpen={showAbout} onClose={onToggleAbout} />

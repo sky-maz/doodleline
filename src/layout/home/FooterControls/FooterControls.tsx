@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useEffect, useState } from 'react';
 import { Text, Progress, IconButton, Flex } from '@chakra-ui/react';
 import {
@@ -8,10 +9,12 @@ import {
 	FaCog,
 	FaQuestion,
 } from 'react-icons/fa';
+import useTranslation from 'next-translate/useTranslation';
 import useDebounce from '@hooks/useDebounce';
 import { asTime } from '@utils/convert';
+import { NS, FOOTER_CONTROLS } from '@constants/translations';
 
-interface IFooterControls {
+interface FooterControlsProps {
 	threshold: number;
 	onToggleCustomize: () => void;
 	onToggleAbout: () => void;
@@ -19,13 +22,14 @@ interface IFooterControls {
 	onNextRef: () => void;
 }
 
-const FooterControls: FC<IFooterControls> = ({
+const FooterControls: FC<FooterControlsProps> = ({
 	threshold,
 	onToggleCustomize,
 	onToggleAbout,
 	onPrevRef,
 	onNextRef,
 }) => {
+	const { t } = useTranslation(NS.HOME);
 	const [timer, setTimer] = useState<number>(0);
 	const [isPaused, setIsPaused] = useState<boolean>(true);
 
@@ -61,7 +65,7 @@ const FooterControls: FC<IFooterControls> = ({
 				<IconButton
 					isRound
 					data-testid='customize-btn'
-					aria-label='customize-settings'
+					aria-label={t(FOOTER_CONTROLS.CUSTOMIZE_ARIA)}
 					size='md'
 					icon={<FaCog />}
 					onClick={onToggleCustomize}
@@ -85,7 +89,7 @@ const FooterControls: FC<IFooterControls> = ({
 					<IconButton
 						isRound
 						data-testid='prev-btn'
-						aria-label='previous-reference'
+						aria-label={t(FOOTER_CONTROLS.PREV_ARIA)}
 						colorScheme='teal'
 						size='md'
 						icon={<FaStepBackward />}
@@ -95,7 +99,11 @@ const FooterControls: FC<IFooterControls> = ({
 						<IconButton
 							isRound
 							data-testid='play-btn'
-							aria-label={isPaused ? 'play' : 'pause'}
+							aria-label={t(
+								isPaused
+									? FOOTER_CONTROLS.PLAY_ARIA
+									: FOOTER_CONTROLS.PAUSE_ARIA
+							)}
 							colorScheme='teal'
 							size='lg'
 							icon={isPaused ? <FaPlay /> : <FaPause />}
@@ -105,7 +113,7 @@ const FooterControls: FC<IFooterControls> = ({
 					<IconButton
 						isRound
 						data-testid='next-btn'
-						aria-label='next-reference'
+						aria-label={t(FOOTER_CONTROLS.NEXT_ARIA)}
 						colorScheme='teal'
 						size='md'
 						icon={<FaStepForward />}
@@ -117,7 +125,7 @@ const FooterControls: FC<IFooterControls> = ({
 				<IconButton
 					isRound
 					data-testid='about-btn'
-					aria-label='about-app'
+					aria-label={t(FOOTER_CONTROLS.ABOUT_ARIA)}
 					size='md'
 					icon={<FaQuestion />}
 					onClick={onToggleAbout}

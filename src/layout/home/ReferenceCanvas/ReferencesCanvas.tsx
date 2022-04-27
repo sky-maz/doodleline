@@ -13,7 +13,7 @@ import { motion } from 'framer-motion';
 import { setReader } from '@utils/reader';
 
 interface IReferencesCanvas {
-	imgs?: FileList;
+	imgs?: File[];
 	current: number;
 }
 
