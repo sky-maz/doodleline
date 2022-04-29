@@ -15,9 +15,9 @@ type Settings = { type: string; timer: number; imgs: File[] };
 const HomePage: NextPage = () => {
 	const [settings, setSettings] = useState<Settings>();
 	const [current, setCurrent] = useState<number>(0);
-	const { value: showSettings, onToggle: onToggleSettings } = useToggle(true);
+	const { value: showSettings, onToggle: onToggleSettings } = useToggle();
 	const { value: showCustomize, onToggle: onToggleCustomize } = useToggle();
-	const { value: showAbout, onToggle: onToggleAbout } = useToggle();
+	const { value: showAbout, onToggle: onToggleAbout } = useToggle(true);
 
 	const onPrevRef = () => {
 		if (current > 0) {

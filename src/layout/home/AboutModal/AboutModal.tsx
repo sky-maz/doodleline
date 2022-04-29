@@ -13,9 +13,11 @@ import {
 	Divider,
 	Kbd,
 	Flex,
-	IconButton,
+	UnorderedList,
+	ListItem,
 } from '@chakra-ui/react';
-import { FaDiscord, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
+import useTranslation from 'next-translate/useTranslation';
+import { NS, ABOUT_MODAL } from '@constants/translations';
 
 interface IAboutModal {
 	isOpen: boolean;
@@ -23,6 +25,7 @@ interface IAboutModal {
 }
 
 const AboutModal: FC<IAboutModal> = ({ isOpen, onClose }) => {
+	const { t } = useTranslation(NS.HOME);
 	const [isMd] = useMediaQuery('(min-width: 768px)');
 
 	return (
@@ -32,11 +35,12 @@ const AboutModal: FC<IAboutModal> = ({ isOpen, onClose }) => {
 			isCentered={true}
 			colorScheme='teal'
 			motionPreset='slideInBottom'
-			size={isMd ? 'lg' : '4xl'}
+			size='4xl'
 			scrollBehavior='inside'
 		>
 			<ModalOverlay />
 			<ModalContent
+				aria-label={t(ABOUT_MODAL.ARIA)}
 				marginTop='0px'
 				marginBottom='0px'
 				alignSelf={{ base: 'flex-end', md: 'center' }}
@@ -51,21 +55,31 @@ const AboutModal: FC<IAboutModal> = ({ isOpen, onClose }) => {
 						justifyContent='center'
 						gap='2em'
 					>
-						<Flex flex='1' flexDir='column' gap='2em'>
-							<Heading size='md'>Instructions</Heading>
+						<Flex flex='1' flexDir='column' gap='1em'>
+							<Heading size='md'>{t(ABOUT_MODAL.INSTRUCTIONS_TITLE)}</Heading>
 							<Text fontSize='md' textAlign='justify'>
-								......
+								{t(ABOUT_MODAL.INSTRUCTIONS_DESCRIPTION)}
 							</Text>
+							<UnorderedList>
+								{ABOUT_MODAL.INSTRUCTIONS_TYPES.map(({ name, desc }) => (
+									<ListItem key={name}>
+										<Text as='span' fontWeight='bold'>
+											{`${t(name)}: `}
+										</Text>
+										<Text as='span'>{t(desc)}</Text>
+									</ListItem>
+								))}
+							</UnorderedList>
 						</Flex>
 						<Divider orientation='vertical' />
-						<Flex flex='1' flexDir='column' gap='2em'>
-							<Heading size='md'>Shortcuts</Heading>
-							<span>
-								<Kbd>shift</Kbd> + <Kbd>H</Kbd>
-							</span>
-							<span>
-								<Kbd>shift</Kbd> + <Kbd>H</Kbd>
-							</span>
+						<Flex flex='1' flexDir='column' gap='1em'>
+							<Heading size='md'>{t(ABOUT_MODAL.SHORTCUTS_TITLE)}</Heading>
+							{ABOUT_MODAL.SHORTCUTS.map(({ key, shortcut }) => (
+								<Flex key={key} align='center' justify='space-between'>
+									<Text as='span'>{t(key)}</Text>
+									<Kbd dangerouslySetInnerHTML={{ __html: shortcut }} />
+								</Flex>
+							))}
 						</Flex>
 					</Flex>
 				</ModalBody>
@@ -75,41 +89,24 @@ const AboutModal: FC<IAboutModal> = ({ isOpen, onClose }) => {
 					justifyContent='center'
 					gap='1em'
 				>
-					<Flex gap='2em'>
-						<IconButton
-							isRound
-							aria-label='discord link'
-							colorScheme='blue'
-							size='sm'
-							icon={<FaDiscord size={18} />}
-						/>
-						<IconButton
-							isRound
-							aria-label='instagram link'
-							colorScheme='purple'
-							size='sm'
-							icon={<FaInstagram size={18} />}
-						/>
-						<IconButton
-							isRound
-							aria-label='tiktok link'
-							colorScheme='gray'
-							size='sm'
-							icon={<FaTiktok size={18} />}
-						/>
-						<IconButton
-							isRound
-							aria-label='youtube link'
-							colorScheme='red'
-							size='sm'
-							icon={<FaYoutube size={18} />}
-						/>
-					</Flex>
+					{/* <Flex gap='2em'>
+						{ABOUT_MODAL.SOCIALS.map(({ key, color, to, Icon }) => (
+							<IconButton
+								isRound
+								key={key}
+								aria-label={t(key)}
+								colorScheme={color}
+								size='sm'
+								icon={<Icon size={18} />}
+								onClick={() => console.log(to)}
+							/>
+						))}
+					</Flex> */}
 					<Text fontSize='sm' color='blackAlpha.600' textAlign='center'>
 						Doodleline v1.0.0
 					</Text>
 					<Text fontSize='xs' color='blackAlpha.600' textAlign='center'>
-						Developed by SkyCodelabs © 2022.
+						{t(ABOUT_MODAL.COPYRIGHT)}
 					</Text>
 				</ModalFooter>
 			</ModalContent>

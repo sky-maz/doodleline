@@ -1,3 +1,5 @@
+import { FaDiscord, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
+
 // NSs
 export const NS = {
 	COMMON: 'common',
@@ -40,6 +42,7 @@ export const SETTINGS_MODAL = {
 	TOAST_TITLE: 'toast_title',
 	TOAST_DESCRIPTION: 'toast_description',
 };
+
 export const FOOTER_CONTROLS = {
 	CUSTOMIZE_ARIA: 'customize_aria',
 	PREV_ARIA: 'previous_aria',
@@ -48,3 +51,37 @@ export const FOOTER_CONTROLS = {
 	NEXT_ARIA: 'next_aria',
 	ABOUT_ARIA: 'about_aria',
 };
+
+export const ABOUT_MODAL = {
+	ARIA: 'about_modal_aria',
+	INSTRUCTIONS_TITLE: 'instructions_title',
+	INSTRUCTIONS_DESCRIPTION: 'instructions_description',
+	INSTRUCTIONS_TYPES: [
+		{ name: 'instructions_reference_def', desc: 'instructions_reference_desc' },
+		{ name: 'instructions_structure_def', desc: 'instructions_structure_desc' },
+		{ name: 'instructions_mirror_def', desc: 'instructions_mirror_desc' },
+		{ name: 'instructions_strategic_def', desc: 'instructions_strategic_desc' },
+	],
+	SHORTCUTS_TITLE: 'shortcuts_title',
+	SHORTCUTS: [
+		{ key: 'shortcut_about_modal', shortcut: 'Tab' },
+		{ key: 'shortcut_customize_modal', shortcut: 'Shift' },
+		{ key: 'shortcut_prev_reference', shortcut: '&#8592;' },
+		{ key: 'shortcut_toggle_practice', shortcut: 'Space' },
+		{ key: 'shortcut_next_reference', shortcut: '&#8594;	' },
+	],
+	SOCIALS: [
+		{ key: 'discord_aria', color: 'blue', to: '#discord', Icon: FaDiscord },
+		{
+			key: 'instagram_aria',
+			color: 'purple',
+			to: '#instagram',
+			Icon: FaInstagram,
+		},
+		{ key: 'tiktok_aria', color: 'gray', to: '#tiktok', Icon: FaTiktok },
+		{ key: 'youtube_aria', color: 'red', to: '#youtube', Icon: FaYoutube },
+	],
+	COPYRIGHT: 'about_modal_copyright',
+};
+
+export const CUSTOMIZE_MODAL = {};
