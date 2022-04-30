@@ -1,11 +1,13 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import SettingsModal from './SettingsModal';
-import I18nProvider from 'next-translate/I18nProvider';
 import { ChakraProvider } from '@chakra-ui/react';
+import I18nProvider from 'next-translate/I18nProvider';
+
+import SettingsModal from './SettingsModal';
+
+import defaultTheme from '@config/theme';
 import homeEN from './../../../../locales/en/home.json';
 import homeSP from './../../../../locales/sp/home.json';
-import defaultTheme from '@config/theme';
 
 let isMobile = [false];
 jest.mock('@chakra-ui/react', () => {

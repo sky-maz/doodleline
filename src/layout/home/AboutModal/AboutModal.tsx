@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import useTranslation from 'next-translate/useTranslation';
 import {
 	useMediaQuery,
 	Modal,
@@ -16,7 +17,7 @@ import {
 	UnorderedList,
 	ListItem,
 } from '@chakra-ui/react';
-import useTranslation from 'next-translate/useTranslation';
+
 import { NS, ABOUT_MODAL } from '@constants/translations';
 
 interface IAboutModal {

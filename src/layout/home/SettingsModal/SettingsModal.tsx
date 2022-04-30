@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { FC, useState } from 'react';
+import useTranslation from 'next-translate/useTranslation';
 import {
 	useToast,
 	useMediaQuery,
@@ -16,8 +17,8 @@ import {
 	Checkbox,
 	Button,
 } from '@chakra-ui/react';
-import useTranslation from 'next-translate/useTranslation';
 import { FaCheckCircle, FaCloudUploadAlt } from 'react-icons/fa';
+
 import { NS, SETTINGS_MODAL } from '@constants/translations';
 
 interface ISettingsModal {
