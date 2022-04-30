@@ -27,14 +27,14 @@ interface ISettingsModal {
 }
 
 const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
-	const { t } = useTranslation(NS.HOME);
 	const { PRACTICE_OPTIONS, TIMER_OPTIONS } = SETTINGS_MODAL;
+	const { t } = useTranslation(NS.HOME);
+	const toast = useToast();
+	const [isMd] = useMediaQuery('(min-width: 768px)');
 	const [type, setType] = useState<string>(PRACTICE_OPTIONS[0].value);
 	const [timer, setTimer] = useState<number>(TIMER_OPTIONS[0].value);
 	const [files, setFiles] = useState<FileList | null>(null);
 	const [shuffle, setShuffle] = useState<boolean>(false);
-	const [isMd] = useMediaQuery('(min-width: 768px)');
-	const toast = useToast();
 	const hasFiles = files && files.length > 0;
 
 	const onSubmit = () => {
