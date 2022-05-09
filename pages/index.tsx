@@ -17,7 +17,7 @@ const HomePage: NextPage = () => {
 	const [current, setCurrent] = useState<number>(0);
 	const { value: showSettings, onToggle: onToggleSettings } = useToggle();
 	const { value: showCustomize, onToggle: onToggleCustomize } = useToggle();
-	const { value: showAbout, onToggle: onToggleAbout } = useToggle(true);
+	const { value: showAbout, onToggle: onToggleAbout } = useToggle();
 
 	const onPrevRef = () => {
 		if (current > 0) {
@@ -40,10 +40,10 @@ const HomePage: NextPage = () => {
 			</Head>
 
 			<Flex direction='column' h='100vh' w='100vw'>
-				<Flex h='calc(100vh - 8em)' w='100vw' gap='1em'>
+				<Flex h='calc(100vh - 6em)' w='100vw' gap='1em'>
 					<ReferencesCanvas current={current} imgs={settings?.imgs} />
 				</Flex>
-				<Box h='8em' w='100vw' border='1px solid grey'>
+				<Box h='6em' w='100vw' border='1px solid grey'>
 					<FooterControls
 						threshold={settings?.timer ?? 0}
 						onToggleCustomize={onToggleCustomize}

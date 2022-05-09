@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useEffect, useState } from 'react';
-import { Text, Progress, IconButton, Flex } from '@chakra-ui/react';
+import { Progress, IconButton, Flex } from '@chakra-ui/react';
 import {
 	FaStepBackward,
 	FaStepForward,
@@ -10,9 +10,8 @@ import {
 	FaQuestion,
 } from 'react-icons/fa';
 import useTranslation from 'next-translate/useTranslation';
-import useDebounce from '@hooks/useDebounce';
-import { asTime } from '@utils/convert';
 import { NS, FOOTER_CONTROLS } from '@constants/translations';
+import { useDebounceEffect, useEventListener } from 'ahooks';
 
 interface FooterControlsProps {
 	threshold: number;
@@ -33,22 +32,6 @@ const FooterControls: FC<FooterControlsProps> = ({
 	const [timer, setTimer] = useState<number>(0);
 	const [isPaused, setIsPaused] = useState<boolean>(true);
 
-	useDebounce(
-		() => {
-			if (threshold && !isPaused) {
-				setTimer(timer + 1);
-			}
-		},
-		1000,
-		[isPaused, timer]
-	);
-
-	useEffect(() => {
-		if (threshold && timer > threshold) {
-			onNext();
-		}
-	}, [timer]);
-
 	const onPrev = () => {
 		setTimer(0);
 		onPrevRef();
@@ -59,31 +42,65 @@ const FooterControls: FC<FooterControlsProps> = ({
 		onNextRef();
 	};
 
+	const onTogglePause = () => setIsPaused(!isPaused);
+
+	useDebounceEffect(
+		() => {
+			if (threshold && !isPaused) {
+				setTimer(timer + 1);
+			}
+		},
+		[isPaused, timer],
+		{ wait: 1000 }
+	);
+
+	useEventListener('keydown', (e) => {
+		switch (e.code) {
+			case 'ShiftLeft':
+				return onToggleCustomize();
+			case 'Tab':
+				return onToggleAbout();
+			case 'ArrowLeft':
+				return onPrev();
+			case 'ArrowRight':
+				return onNext();
+			case 'Space':
+				return onTogglePause();
+			default:
+				return;
+		}
+	});
+
+	useEffect(() => {
+		if (threshold && timer > threshold) {
+			onNext();
+		}
+	}, [timer]);
+
 	return (
-		<Flex h='100%' w='100%' alignItems='center'>
-			<Flex flex='1' justify='center'>
-				<IconButton
-					isRound
-					data-testid='customize-btn'
-					aria-label={t(FOOTER_CONTROLS.CUSTOMIZE_ARIA)}
-					size='md'
-					icon={<FaCog />}
-					onClick={onToggleCustomize}
-				/>
-			</Flex>
-			<Flex flex='2' flexDir='column' justify='stretch' gap={4}>
-				<Flex align='center' justify='center' gap={2}>
-					<Text data-testid='timer-span' fontSize='sm'>
-						{asTime(timer)}
-					</Text>
-					<Progress
-						colorScheme='teal'
-						size='sm'
-						width='100%'
-						borderRadius='5px'
-						value={(timer / threshold) * 100}
+		<Flex
+			data-testid='footer-controls'
+			h='100%'
+			w='100%'
+			direction='column'
+			justify='stretch'
+		>
+			<Progress
+				colorScheme='teal'
+				size='sm'
+				width='100%'
+				value={(timer / threshold) * 100}
+			/>
+			<Flex h='100%' w='100%' alignItems='center'>
+				<Flex flex='1' justify='center'>
+					<IconButton
+						isRound
+						data-testid='customize-btn'
+						aria-label={t(FOOTER_CONTROLS.CUSTOMIZE_ARIA)}
+						size='md'
+						icon={<FaCog />}
+						onClick={onToggleCustomize}
 					/>
-					<Text fontSize='sm'>{asTime(threshold)}</Text>
 				</Flex>
 				<Flex align='center' justify='center' gap={4}>
 					<IconButton
@@ -98,6 +115,7 @@ const FooterControls: FC<FooterControlsProps> = ({
 					{threshold > 0 && (
 						<IconButton
 							isRound
+							id={isPaused ? 'play-btn' : 'pause-btn'}
 							data-testid='play-btn'
 							aria-label={t(
 								isPaused
@@ -107,7 +125,7 @@ const FooterControls: FC<FooterControlsProps> = ({
 							colorScheme='teal'
 							size='lg'
 							icon={isPaused ? <FaPlay /> : <FaPause />}
-							onClick={() => setIsPaused(!isPaused)}
+							onClick={onTogglePause}
 						/>
 					)}
 					<IconButton
@@ -120,16 +138,16 @@ const FooterControls: FC<FooterControlsProps> = ({
 						onClick={onNext}
 					/>
 				</Flex>
-			</Flex>
-			<Flex flex='1' justify='center'>
-				<IconButton
-					isRound
-					data-testid='about-btn'
-					aria-label={t(FOOTER_CONTROLS.ABOUT_ARIA)}
-					size='md'
-					icon={<FaQuestion />}
-					onClick={onToggleAbout}
-				/>
+				<Flex flex='1' justify='center'>
+					<IconButton
+						isRound
+						data-testid='about-btn'
+						aria-label={t(FOOTER_CONTROLS.ABOUT_ARIA)}
+						size='md'
+						icon={<FaQuestion />}
+						onClick={onToggleAbout}
+					/>
+				</Flex>
 			</Flex>
 		</Flex>
 	);
