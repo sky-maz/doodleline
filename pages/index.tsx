@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import type { NextPage } from 'next';
+import { NextPage } from 'next';
 import Head from 'next/head';
+import React, { useState } from 'react';
 import { Box, Flex } from '@chakra-ui/react';
-import useToggle from '@hooks/useToggle';
+import { useToggle } from 'ahooks';
+
+import { getServerSideProps } from '@utils/server_side_props';
 import {
 	ReferencesCanvas,
 	FooterControls,
@@ -15,9 +17,9 @@ type Settings = { type: string; timer: number; imgs: File[] };
 const HomePage: NextPage = () => {
 	const [settings, setSettings] = useState<Settings>();
 	const [current, setCurrent] = useState<number>(0);
-	const { value: showSettings, onToggle: onToggleSettings } = useToggle();
-	const { value: showCustomize, onToggle: onToggleCustomize } = useToggle();
-	const { value: showAbout, onToggle: onToggleAbout } = useToggle();
+	const [showSettings, { toggle: onToggleSettings }] = useToggle();
+	const [showCustomize, { toggle: onToggleCustomize }] = useToggle();
+	const [showAbout, { toggle: onToggleAbout }] = useToggle();
 
 	const onPrevRef = () => {
 		if (current > 0) {
@@ -43,7 +45,7 @@ const HomePage: NextPage = () => {
 				<Flex h='calc(100vh - 6em)' w='100vw' gap='1em'>
 					<ReferencesCanvas current={current} imgs={settings?.imgs} />
 				</Flex>
-				<Box h='6em' w='100vw' border='1px solid grey'>
+				<Box h='6em' w='100vw'>
 					<FooterControls
 						threshold={settings?.timer ?? 0}
 						onToggleCustomize={onToggleCustomize}
@@ -63,5 +65,7 @@ const HomePage: NextPage = () => {
 		</>
 	);
 };
+
+export { getServerSideProps };
 
 export default HomePage;
