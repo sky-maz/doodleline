@@ -13,7 +13,7 @@ import {
 	Tooltip,
 } from '@chakra-ui/react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
-import { MdGrid4X4, MdRedo, MdUndo } from 'react-icons/md';
+import { MdClear, MdGrid4X4, MdRedo, MdUndo } from 'react-icons/md';
 
 import { setReader } from '@utils/reader';
 import REFERENCES_CANVAS from './ReferencesCanvas.constants';
@@ -40,14 +40,19 @@ const ReferencesCanvas: FC<IReferencesCanvas> = ({ reference }) => {
 
 	const startDrag = (e: Events) => dragControls.start(e, {});
 
+	const resetPosition = () => {
+		const imgElement = document.getElementById(refCanvasId);
+		if (imgElement) {
+			setRotation(0);
+			setZoom(50);
+			imgElement.style.transform = 'none';
+		}
+	};
+
 	useEffect(() => {
 		if (reference) {
-			const imgElement = document.getElementById(refCanvasId);
-			if (imgElement) {
-				imgElement.style.transform = 'none';
-			}
 			setReader(refCanvasId, reference);
-			setZoom(50);
+			resetPosition();
 		}
 	}, [reference]);
 
@@ -108,15 +113,26 @@ const ReferencesCanvas: FC<IReferencesCanvas> = ({ reference }) => {
 						gap='1em'
 					>
 						<Tooltip
-							label={t(REFERENCES_CANVAS.GRID_BTN_ARIA)}
+							label={t(REFERENCES_CANVAS.TOGGLE_GRID_ARIA)}
 							placement='left'
 						>
 							<IconButton
-								data-testid={REFERENCES_CANVAS.GRID_BTN_TEST_ID}
-								aria-label={t(REFERENCES_CANVAS.GRID_BTN_ARIA)}
+								data-testid={REFERENCES_CANVAS.TOGGLE_GRID_TEST_ID}
+								aria-label={t(REFERENCES_CANVAS.TOGGLE_GRID_ARIA)}
 								colorScheme={grid ? 'green' : undefined}
 								icon={<MdGrid4X4 />}
 								onClick={() => setGrid(!grid)}
+							/>
+						</Tooltip>
+						<Tooltip
+							label={t(REFERENCES_CANVAS.RESET_POSITION_ARIA)}
+							placement='left'
+						>
+							<IconButton
+								data-testid={REFERENCES_CANVAS.RESET_POSITION_TEST_ID}
+								aria-label={t(REFERENCES_CANVAS.RESET_POSITION_ARIA)}
+								icon={<MdClear />}
+								onClick={resetPosition}
 							/>
 						</Tooltip>
 						<Tooltip
@@ -163,7 +179,7 @@ const ReferencesCanvas: FC<IReferencesCanvas> = ({ reference }) => {
 					</Flex>
 				</>
 			) : (
-				<Heading>No loaded image available</Heading>
+				<Heading>{t(REFERENCES_CANVAS.NO_REFERENCES_MSG)}</Heading>
 			)}
 		</Flex>
 	);

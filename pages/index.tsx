@@ -17,7 +17,7 @@ type Settings = { type: string; timer: number; imgs: File[] };
 const HomePage: NextPage = () => {
 	const [settings, setSettings] = useState<Settings>();
 	const [current, setCurrent] = useState<number>(0);
-	const [showSettings, { toggle: onToggleSettings }] = useToggle();
+	const [showSettings, { toggle: onToggleSettings }] = useToggle(true);
 	const [showCustomize, { toggle: onToggleCustomize }] = useToggle();
 	const [showAbout, { toggle: onToggleAbout }] = useToggle();
 
@@ -30,6 +30,9 @@ const HomePage: NextPage = () => {
 	const onNextRef = () => {
 		if (settings && current < settings.imgs.length) {
 			setCurrent(current + 1);
+		} else if (settings && current >= settings.imgs.length) {
+			setSettings(undefined);
+			onToggleSettings();
 		}
 	};
 
@@ -43,7 +46,7 @@ const HomePage: NextPage = () => {
 
 			<Flex direction='column' h='100vh' w='100vw'>
 				<Flex h='calc(100vh - 6em)' w='100vw' gap='1em'>
-					<ReferencesCanvas reference={settings?.imgs[0]} />
+					<ReferencesCanvas reference={settings?.imgs[current]} />
 				</Flex>
 				<Box h='6em' w='100vw'>
 					<FooterControls
