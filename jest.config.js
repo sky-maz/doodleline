@@ -10,10 +10,8 @@ const customJestConfig = {
 	setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
 	moduleDirectories: ['node_modules', 'src'],
 	moduleNameMapper: {
-		'@config/(.*)': '<rootDir>/src/core/config/$1',
-		'@constants/(.*)': '<rootDir>/src/core/constants/$1',
-		'@hooks/(.*)': '<rootDir>/src/core/hooks/$1',
-  	'@utils/(.*)': '<rootDir>/src/utils/$1'
+		'@locales/(.*)': '<rootDir>/locales/$1',
+  	'@utils/(.*)': '<rootDir>/utils/$1'
   },
 	coverageThreshold: {
 		global: {

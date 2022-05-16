@@ -1,6 +1,8 @@
 import React, { FC, useState } from 'react';
+import useTranslation from 'next-translate/useTranslation';
 import {
 	useMediaQuery,
+	useColorMode,
 	Modal,
 	ModalOverlay,
 	ModalContent,
@@ -13,10 +15,10 @@ import {
 	Text,
 	Select,
 	Switch,
-	Button,
 } from '@chakra-ui/react';
 import { FaGlobe, FaMoon, FaPalette, FaSun } from 'react-icons/fa';
-import { languageOptions } from '@constants/home';
+
+import CUSTOMIZE_MODAL from './CustomizeModal.constants';
 
 interface ICustomizeModal {
 	isOpen: boolean;
@@ -24,10 +26,12 @@ interface ICustomizeModal {
 }
 
 const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
+	const { t } = useTranslation('home');
 	const [isMd] = useMediaQuery('(min-width: 768px)');
 	const [language, setLanguage] = useState<string>('en');
-	const [mode, setMode] = useState<boolean>(false);
-	const CurrentMode = mode ? FaSun : FaMoon;
+	const { colorMode, toggleColorMode } = useColorMode();
+	const isDark = colorMode === 'dark';
+	const CurrentMode = isDark ? FaMoon : FaSun;
 
 	return (
 		<Modal
@@ -40,12 +44,13 @@ const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
 		>
 			<ModalOverlay />
 			<ModalContent
+				aria-label={t(CUSTOMIZE_MODAL.ARIA)}
 				marginTop='0px'
 				marginBottom='0px'
 				alignSelf={{ base: 'flex-end', md: 'center' }}
 				borderRadius={{ base: '1em 1em 0px 0px', md: '1em' }}
 			>
-				<ModalHeader>Customize Settings</ModalHeader>
+				<ModalHeader>{t(CUSTOMIZE_MODAL.TITLE)}</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody display='flex' flexDir='column' gap='2em'>
 					<FormControl
@@ -61,22 +66,18 @@ const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
 							margin={0}
 						>
 							<FaGlobe />
-							<Text>Language</Text>
+							<Text>{t(CUSTOMIZE_MODAL.LANGUAGE_LABEL)}</Text>
 						</FormLabel>
 						<Select
 							id='language'
-							data-testid='language-selector'
+							data-testid={CUSTOMIZE_MODAL.LANGUAGE_TEST_ID}
 							size='sm'
 							w='15em'
 							value={language}
 							onChange={(e) => setLanguage(e.target.value)}
 						>
-							{languageOptions.map((opt) => (
-								<option
-									key={opt.value}
-									data-testid={`language-option-${opt.value}`}
-									value={opt.value}
-								>
+							{CUSTOMIZE_MODAL.LANGUAGE_OPTIONS.map((opt) => (
+								<option key={opt.value} value={opt.value}>
 									{opt.name}
 								</option>
 							))}
@@ -95,13 +96,14 @@ const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
 							margin={0}
 						>
 							<CurrentMode />
-							<Text>Theme Mode</Text>
+							<Text>{t(CUSTOMIZE_MODAL.MODE_LABEL)}</Text>
 						</FormLabel>
 						<Switch
 							id='theme-mode'
-							data-testid='mode-switch'
-							checked={mode}
-							onChange={() => setMode(!mode)}
+							data-testid={CUSTOMIZE_MODAL.MODE_TEST_ID}
+							colorScheme='green'
+							isChecked={isDark}
+							onChange={toggleColorMode}
 						/>
 					</FormControl>
 					<FormControl>
@@ -113,15 +115,11 @@ const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
 							margin={0}
 						>
 							<FaPalette />
-							<Text>Main Color</Text>
+							<Text>{t(CUSTOMIZE_MODAL.COLOR_LABEL)}</Text>
 						</FormLabel>
 					</FormControl>
 				</ModalBody>
-				<ModalFooter>
-					<Button colorScheme='teal' isFullWidth>
-						Save
-					</Button>
-				</ModalFooter>
+				<ModalFooter />
 			</ModalContent>
 		</Modal>
 	);

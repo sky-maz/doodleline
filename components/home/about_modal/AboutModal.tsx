@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
+import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
+import React, { FC } from 'react';
 import {
 	useMediaQuery,
 	Modal,
@@ -16,9 +17,10 @@ import {
 	Flex,
 	UnorderedList,
 	ListItem,
+	IconButton,
 } from '@chakra-ui/react';
 
-import { NS, ABOUT_MODAL } from '@constants/translations';
+import ABOUT_MODAL from './AboutModal.constants';
 
 interface IAboutModal {
 	isOpen: boolean;
@@ -26,15 +28,15 @@ interface IAboutModal {
 }
 
 const AboutModal: FC<IAboutModal> = ({ isOpen, onClose }) => {
-	const { t } = useTranslation(NS.HOME);
+	const { t } = useTranslation('home');
 	const [isMd] = useMediaQuery('(min-width: 768px)');
+	const router = useRouter();
 
 	return (
 		<Modal
 			isOpen={isOpen}
 			onClose={onClose}
 			isCentered={true}
-			colorScheme='teal'
 			motionPreset='slideInBottom'
 			size='4xl'
 			scrollBehavior='inside'
@@ -90,23 +92,24 @@ const AboutModal: FC<IAboutModal> = ({ isOpen, onClose }) => {
 					justifyContent='center'
 					gap='1em'
 				>
-					{/* <Flex gap='2em'>
-						{ABOUT_MODAL.SOCIALS.map(({ key, color, to, Icon }) => (
+					<Flex gap='2em'>
+						{ABOUT_MODAL.SOCIALS.map(({ key, to, Icon }) => (
 							<IconButton
 								isRound
 								key={key}
-								aria-label={t(key)}
-								colorScheme={color}
+								aria-label={key}
+								data-testid={key}
 								size='sm'
+								colorScheme='teal'
 								icon={<Icon size={18} />}
-								onClick={() => console.log(to)}
+								onClick={() => router.push(to)}
 							/>
 						))}
-					</Flex> */}
-					<Text fontSize='sm' color='blackAlpha.600' textAlign='center'>
+					</Flex>
+					<Text fontSize='sm' textAlign='center'>
 						Doodleline v1.0.0
 					</Text>
-					<Text fontSize='xs' color='blackAlpha.600' textAlign='center'>
+					<Text fontSize='xs' textAlign='center'>
 						{t(ABOUT_MODAL.COPYRIGHT)}
 					</Text>
 				</ModalFooter>

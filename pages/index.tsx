@@ -43,7 +43,7 @@ const HomePage: NextPage = () => {
 
 			<Flex direction='column' h='100vh' w='100vw'>
 				<Flex h='calc(100vh - 6em)' w='100vw' gap='1em'>
-					<ReferencesCanvas current={current} imgs={settings?.imgs} />
+					<ReferencesCanvas reference={settings?.imgs[0]} />
 				</Flex>
 				<Box h='6em' w='100vw'>
 					<FooterControls

@@ -1,13 +1,13 @@
+import I18nProvider from 'next-translate/I18nProvider';
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
-import I18nProvider from 'next-translate/I18nProvider';
+import homeEN from '@locales/en/home.json';
+import homeSP from '@locales/sp/home.json';
+import theme from '@utils/theme';
 
 import SettingsModal from './SettingsModal';
-
-import defaultTheme from '@config/theme';
-import homeEN from './../../../../locales/en/home.json';
-import homeSP from './../../../../locales/sp/home.json';
+import SETTINGS_MODAL from './SettingsModal.constants';
 
 let isMobile = [false];
 jest.mock('@chakra-ui/react', () => {
@@ -34,7 +34,7 @@ describe('<SettingsModal /> component ', () => {
 					home: homeEN,
 				}}
 			>
-				<ChakraProvider theme={defaultTheme}>
+				<ChakraProvider theme={theme}>
 					<SettingsModal
 						isOpen={true}
 						onClose={onCloseMock}
@@ -61,7 +61,7 @@ describe('<SettingsModal /> component ', () => {
 					home: homeSP,
 				}}
 			>
-				<ChakraProvider theme={defaultTheme}>
+				<ChakraProvider theme={theme}>
 					<SettingsModal
 						isOpen={true}
 						onClose={onCloseMock}
@@ -83,7 +83,7 @@ describe('<SettingsModal /> component ', () => {
 
 		// Execute
 		const view = render(
-			<ChakraProvider theme={defaultTheme}>
+			<ChakraProvider theme={theme}>
 				<SettingsModal
 					isOpen={true}
 					onClose={onCloseMock}
@@ -104,7 +104,7 @@ describe('<SettingsModal /> component ', () => {
 
 		// Execute
 		const view = render(
-			<ChakraProvider theme={defaultTheme}>
+			<ChakraProvider theme={theme}>
 				<SettingsModal
 					isOpen={true}
 					onClose={onCloseMock}
@@ -114,7 +114,7 @@ describe('<SettingsModal /> component ', () => {
 		);
 
 		// Validation
-		const startBtn = screen.getByTestId('settings-start');
+		const startBtn = screen.getByTestId(SETTINGS_MODAL.BTN_TEST_ID);
 		expect(startBtn).toBeInTheDocument();
 		fireEvent.click(startBtn);
 
@@ -143,7 +143,7 @@ describe('<SettingsModal /> component ', () => {
 
 		// Execute
 		const view = render(
-			<ChakraProvider theme={defaultTheme}>
+			<ChakraProvider theme={theme}>
 				<SettingsModal
 					isOpen={true}
 					onClose={onCloseMock}
@@ -152,24 +152,27 @@ describe('<SettingsModal /> component ', () => {
 			</ChakraProvider>
 		);
 
-		const typeSelector = screen.getByTestId('type-selector');
+		// Validation
+		const typeSelector = screen.getByTestId(SETTINGS_MODAL.PRACTICE_TEST_ID);
 		expect(typeSelector).toBeInTheDocument();
 		fireEvent.change(typeSelector, { target: { value: typeValue } });
 		expect((typeSelector as HTMLSelectElement).value).toBe(typeValue);
 
-		const timerSelector = screen.getByTestId('timer-selector');
+		const timerSelector = screen.getByTestId(SETTINGS_MODAL.TIMER_TEST_ID);
 		expect(timerSelector).toBeInTheDocument();
 		fireEvent.change(timerSelector, { target: { value: timerValue } });
 		expect((timerSelector as HTMLSelectElement).value).toBe(timerValue);
 
-		const referencesLoader = screen.getByTestId('references-loader');
+		const referencesLoader = screen.getByTestId(
+			SETTINGS_MODAL.REFERENCES_TEST_ID
+		);
 		expect(referencesLoader).toBeInTheDocument();
 		fireEvent.change(referencesLoader, { target: { files: filesValue } });
 		expect((referencesLoader as HTMLInputElement).files).toBe(filesValue);
 
 		expect(view).toMatchSnapshot();
 
-		const startBtn = screen.getByTestId('settings-start');
+		const startBtn = screen.getByTestId(SETTINGS_MODAL.BTN_TEST_ID);
 		expect(startBtn).toBeInTheDocument();
 		fireEvent.click(startBtn);
 
@@ -200,7 +203,7 @@ describe('<SettingsModal /> component ', () => {
 
 		// Execute
 		const view = render(
-			<ChakraProvider theme={defaultTheme}>
+			<ChakraProvider theme={theme}>
 				<SettingsModal
 					isOpen={true}
 					onClose={onCloseMock}
@@ -209,29 +212,31 @@ describe('<SettingsModal /> component ', () => {
 			</ChakraProvider>
 		);
 
-		const typeSelector = screen.getByTestId('type-selector');
+		const typeSelector = screen.getByTestId(SETTINGS_MODAL.PRACTICE_TEST_ID);
 		expect(typeSelector).toBeInTheDocument();
 		fireEvent.change(typeSelector, { target: { value: typeValue } });
 		expect((typeSelector as HTMLSelectElement).value).toBe(typeValue);
 
-		const timerSelector = screen.getByTestId('timer-selector');
+		const timerSelector = screen.getByTestId(SETTINGS_MODAL.TIMER_TEST_ID);
 		expect(timerSelector).toBeInTheDocument();
 		fireEvent.change(timerSelector, { target: { value: timerValue } });
 		expect((timerSelector as HTMLSelectElement).value).toBe(timerValue);
 
-		const referencesLoader = screen.getByTestId('references-loader');
+		const referencesLoader = screen.getByTestId(
+			SETTINGS_MODAL.REFERENCES_TEST_ID
+		);
 		expect(referencesLoader).toBeInTheDocument();
 		fireEvent.change(referencesLoader, { target: { files: filesValue } });
 		expect((referencesLoader as HTMLInputElement).files).toBe(filesValue);
 
-		const shuffleCheckbox = screen.getByTestId('shuffle-checkbox');
+		const shuffleCheckbox = screen.getByTestId(SETTINGS_MODAL.RANDOM_TEST_ID);
 		expect(shuffleCheckbox).toBeInTheDocument();
 		fireEvent.click(shuffleCheckbox);
 		expect((shuffleCheckbox as HTMLInputElement).checked).toBe(true);
 
 		expect(view).toMatchSnapshot();
 
-		const startBtn = screen.getByTestId('settings-start');
+		const startBtn = screen.getByTestId(SETTINGS_MODAL.BTN_TEST_ID);
 		expect(startBtn).toBeInTheDocument();
 		fireEvent.click(startBtn);
 

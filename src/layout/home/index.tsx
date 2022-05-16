@@ -1,13 +1,4 @@
-import ReferencesCanvas from './ReferenceCanvas/ReferencesCanvas';
-import FooterControls from './FooterControls/FooterControls';
-import SettingsModal from './SettingsModal/SettingsModal';
-import CustomizeModal from './CustomizeModal/CustomizeModal';
-import AboutModal from './AboutModal/AboutModal';
+import CustomizeModal from '../../../components/home/customize_modal/CustomizeModal';
+import AboutModal from '../../../components/home/about_modal/AboutModal';
 
-export {
-	ReferencesCanvas,
-	FooterControls,
-	SettingsModal,
-	CustomizeModal,
-	AboutModal,
-};
+export { CustomizeModal, AboutModal };

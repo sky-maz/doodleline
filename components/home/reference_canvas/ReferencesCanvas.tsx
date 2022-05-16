@@ -1,0 +1,172 @@
+import useTranslation from 'next-translate/useTranslation';
+import React, { FC, useEffect, useState } from 'react';
+import { motion, useDragControls } from 'framer-motion';
+import {
+	Box,
+	Flex,
+	IconButton,
+	Slider,
+	SliderFilledTrack,
+	SliderThumb,
+	SliderTrack,
+	Heading,
+	Tooltip,
+} from '@chakra-ui/react';
+import { FaPlus, FaMinus } from 'react-icons/fa';
+import { MdGrid4X4, MdRedo, MdUndo } from 'react-icons/md';
+
+import { setReader } from '@utils/reader';
+import REFERENCES_CANVAS from './ReferencesCanvas.constants';
+
+interface IReferencesCanvas {
+	reference?: File;
+}
+
+type Events =
+	| React.MouseEvent
+	| React.TouchEvent
+	| React.PointerEvent
+	| MouseEvent
+	| TouchEvent
+	| PointerEvent;
+
+const ReferencesCanvas: FC<IReferencesCanvas> = ({ reference }) => {
+	const { t } = useTranslation('home');
+	const dragControls = useDragControls();
+	const [grid, setGrid] = useState<boolean>(false);
+	const [rotation, setRotation] = useState<number>(0);
+	const [zoom, setZoom] = useState<number>(50);
+	const refCanvasId = 'reference-item';
+
+	const startDrag = (e: Events) => dragControls.start(e, {});
+
+	useEffect(() => {
+		if (reference) {
+			const imgElement = document.getElementById(refCanvasId);
+			if (imgElement) {
+				imgElement.style.transform = 'none';
+			}
+			setReader(refCanvasId, reference);
+			setZoom(50);
+		}
+	}, [reference]);
+
+	return (
+		<Flex
+			data-testid={REFERENCES_CANVAS.TEST_ID}
+			flex='1'
+			align='center'
+			justify='center'
+			overflow='hidden'
+		>
+			{reference ? (
+				<>
+					<Box
+						as={motion.img}
+						id={refCanvasId}
+						data-testid={REFERENCES_CANVAS.REFERENCE_TEST_ID}
+						aria-label={t(REFERENCES_CANVAS.REFERENCE_ARIA)}
+						alt={t(REFERENCES_CANVAS.REFERENCE_ARIA)}
+						drag
+						dragControls={dragControls}
+						dragMomentum={false}
+						animate={{ scale: zoom / 50, rotate: rotation }}
+						h='auto'
+						w='auto'
+						maxH='100%'
+						maxW='100%'
+					/>
+					<Flex
+						onPointerDown={startDrag}
+						pos='absolute'
+						direction='column'
+						alignSelf='flex-start'
+						justify='stretch'
+						height='calc(100% - 6em)'
+						width='100%'
+					>
+						{grid &&
+							[0, 1, 2, 3].map((row) => (
+								<Flex key={`grid-row-${row}`} flex='1'>
+									{[0, 1, 2, 3].map((column) => (
+										<Flex
+											key={`grid-cell-${row}-${column}`}
+											flex='1'
+											border='1px solid rgba(0,0,0,0.2)'
+										/>
+									))}
+								</Flex>
+							))}
+					</Flex>
+					<Flex
+						pos='absolute'
+						direction='column'
+						alignSelf='flex-end'
+						align='center'
+						right={0}
+						p={4}
+						gap='1em'
+					>
+						<Tooltip
+							label={t(REFERENCES_CANVAS.GRID_BTN_ARIA)}
+							placement='left'
+						>
+							<IconButton
+								data-testid={REFERENCES_CANVAS.GRID_BTN_TEST_ID}
+								aria-label={t(REFERENCES_CANVAS.GRID_BTN_ARIA)}
+								colorScheme={grid ? 'green' : undefined}
+								icon={<MdGrid4X4 />}
+								onClick={() => setGrid(!grid)}
+							/>
+						</Tooltip>
+						<Tooltip
+							label={t(REFERENCES_CANVAS.ROTATE_LEFT_ARIA)}
+							placement='left'
+						>
+							<IconButton
+								data-testid={REFERENCES_CANVAS.ROTATE_LEFT_TEST_ID}
+								aria-label={t(REFERENCES_CANVAS.ROTATE_LEFT_ARIA)}
+								icon={<MdRedo />}
+								onClick={() => setRotation(rotation + 45)}
+							/>
+						</Tooltip>
+						<Tooltip
+							label={t(REFERENCES_CANVAS.ROTATE_RIGHT_ARIA)}
+							placement='left'
+						>
+							<IconButton
+								data-testid={REFERENCES_CANVAS.ROTATE_RIGHT_TEST_ID}
+								aria-label={t(REFERENCES_CANVAS.ROTATE_RIGHT_ARIA)}
+								icon={<MdUndo />}
+								onClick={() => setRotation(rotation - 45)}
+							/>
+						</Tooltip>
+						<FaPlus color='green' />
+						<Slider
+							data-testid={REFERENCES_CANVAS.ZOOM_TEST_ID}
+							aria-label={t(REFERENCES_CANVAS.ZOOM_ARIA)}
+							size='lg'
+							orientation='vertical'
+							minH='20em'
+							colorScheme='green'
+							min={25}
+							max={150}
+							value={zoom}
+							onChange={(value) => setZoom(value)}
+						>
+							<SliderTrack>
+								<SliderFilledTrack />
+							</SliderTrack>
+							<SliderThumb />
+						</Slider>
+						<FaMinus color='green' />
+					</Flex>
+				</>
+			) : (
+				<Heading>No loaded image available</Heading>
+			)}
+		</Flex>
+	);
+};
+
+export default ReferencesCanvas;

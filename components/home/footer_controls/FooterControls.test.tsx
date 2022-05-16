@@ -1,13 +1,13 @@
+import I18nProvider from 'next-translate/I18nProvider';
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import I18nProvider from 'next-translate/I18nProvider';
 import { ChakraProvider } from '@chakra-ui/react';
-import FooterControls from './FooterControls';
+import homeEN from '@locales/en/home.json';
+import homeSP from '@locales/sp/home.json';
+import theme from '@utils/theme';
 
-import defaultTheme from '@config/theme';
-import homeEN from './../../../../locales/en/home.json';
-import homeSP from './../../../../locales/sp/home.json';
-import { FOOTER_CONTROLS } from '@constants/translations';
+import FOOTER_CONTROLS from './FooterControls.constants';
+import FooterControls from './FooterControls';
 
 describe('<FooterControls /> component ', () => {
 	it('should display the en translation', () => {
@@ -25,7 +25,7 @@ describe('<FooterControls /> component ', () => {
 					home: homeEN,
 				}}
 			>
-				<ChakraProvider theme={defaultTheme}>
+				<ChakraProvider theme={theme}>
 					<FooterControls
 						threshold={0}
 						onToggleCustomize={onToggleCustomizeMock}
@@ -56,7 +56,7 @@ describe('<FooterControls /> component ', () => {
 					home: homeSP,
 				}}
 			>
-				<ChakraProvider theme={defaultTheme}>
+				<ChakraProvider theme={theme}>
 					<FooterControls
 						threshold={0}
 						onToggleCustomize={onToggleCustomizeMock}
@@ -81,7 +81,7 @@ describe('<FooterControls /> component ', () => {
 
 		// Execute
 		const view = render(
-			<ChakraProvider theme={defaultTheme}>
+			<ChakraProvider theme={theme}>
 				<FooterControls
 					threshold={0}
 					onToggleCustomize={onToggleCustomizeMock}
@@ -105,7 +105,7 @@ describe('<FooterControls /> component ', () => {
 
 		// Execute
 		const view = render(
-			<ChakraProvider theme={defaultTheme}>
+			<ChakraProvider theme={theme}>
 				<FooterControls
 					threshold={1800}
 					onToggleCustomize={onToggleCustomizeMock}
@@ -116,22 +116,22 @@ describe('<FooterControls /> component ', () => {
 			</ChakraProvider>
 		);
 
-		const customizeBtn = screen.getByTestId('customize-btn');
+		const customizeBtn = screen.getByTestId(FOOTER_CONTROLS.CUSTOMIZE_TEST_ID);
 		expect(customizeBtn).toBeInTheDocument();
 		fireEvent.click(customizeBtn);
 		expect(onToggleCustomizeMock).toBeCalledTimes(1);
 
-		const aboutBtn = screen.getByTestId('about-btn');
+		const aboutBtn = screen.getByTestId(FOOTER_CONTROLS.ABOUT_TEST_ID);
 		expect(aboutBtn).toBeInTheDocument();
 		fireEvent.click(aboutBtn);
 		expect(onToggleAboutMock).toBeCalledTimes(1);
 
-		const prevBtn = screen.getByTestId('prev-btn');
+		const prevBtn = screen.getByTestId(FOOTER_CONTROLS.PREV_TEST_ID);
 		expect(prevBtn).toBeInTheDocument();
 		fireEvent.click(prevBtn);
 		expect(onPrevRefMock).toBeCalledTimes(1);
 
-		const nextBtn = screen.getByTestId('next-btn');
+		const nextBtn = screen.getByTestId(FOOTER_CONTROLS.NEXT_TEST_ID);
 		expect(nextBtn).toBeInTheDocument();
 		fireEvent.click(nextBtn);
 		expect(onNextRefMock).toBeCalledTimes(1);
@@ -149,7 +149,7 @@ describe('<FooterControls /> component ', () => {
 
 		// Execute
 		const view = render(
-			<ChakraProvider theme={defaultTheme}>
+			<ChakraProvider theme={theme}>
 				<FooterControls
 					threshold={1}
 					onToggleCustomize={onToggleCustomizeMock}
@@ -160,7 +160,7 @@ describe('<FooterControls /> component ', () => {
 			</ChakraProvider>
 		);
 
-		const footerControls = screen.getByTestId('footer-controls');
+		const footerControls = screen.getByTestId(FOOTER_CONTROLS.TEST_ID);
 		fireEvent.keyDown(footerControls, { code: 'example' });
 		fireEvent.keyDown(footerControls, { code: 'ShiftLeft' });
 		expect(onToggleCustomizeMock).toBeCalledTimes(1);
@@ -175,8 +175,8 @@ describe('<FooterControls /> component ', () => {
 		expect(onNextRefMock).toBeCalledTimes(1);
 
 		fireEvent.keyDown(footerControls, { code: 'Space' });
-		const playBtn = screen.getByTestId('play-btn');
-		expect(playBtn.id).toBe('pause-btn');
+		const toggleBtn = screen.getByTestId(FOOTER_CONTROLS.TOGGLE_TEST_ID);
+		expect(toggleBtn.id).toBe('pause-btn');
 
 		// Validation
 		expect(view).toMatchSnapshot();
@@ -191,7 +191,7 @@ describe('<FooterControls /> component ', () => {
 
 		// Execute
 		const view = render(
-			<ChakraProvider theme={defaultTheme}>
+			<ChakraProvider theme={theme}>
 				<FooterControls
 					threshold={1}
 					onToggleCustomize={onToggleCustomizeMock}
@@ -202,9 +202,9 @@ describe('<FooterControls /> component ', () => {
 			</ChakraProvider>
 		);
 
-		const playBtn = screen.getByTestId('play-btn');
-		expect(playBtn).toBeInTheDocument();
-		fireEvent.click(playBtn);
+		const toggleBtn = screen.getByTestId(FOOTER_CONTROLS.TOGGLE_TEST_ID);
+		expect(toggleBtn).toBeInTheDocument();
+		fireEvent.click(toggleBtn);
 
 		await waitFor(
 			() => {

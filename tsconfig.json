@@ -23,23 +23,17 @@
       "@sass/*": [
         "sass/*"
       ],
-      "@config/*": [
-        "./src/core/config/*"
-      ],
-      "@constants/*": [
-        "./src/core/constants/*"
-      ],
-      "@hooks/*": [
-        "./src/core/hooks/*"
+      "@locales/*": [
+        "locales/*"
       ],
       "@common/*": [
-        "./src/layout/_common/*"
+        "./components/_common/*"
       ],
       "@components/*": [
-        "./src/layout/*"
+        "./components/*"
       ],
       "@utils/*": [
-        "./src/utils/*"
+        "./utils/*"
       ]
     }
   },

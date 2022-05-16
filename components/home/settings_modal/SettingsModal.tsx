@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import React, { FC, useState } from 'react';
 import useTranslation from 'next-translate/useTranslation';
+import React, { FC, useState } from 'react';
 import {
 	useToast,
 	useMediaQuery,
@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react';
 import { FaCheckCircle, FaCloudUploadAlt } from 'react-icons/fa';
 
-import { NS, SETTINGS_MODAL } from '@constants/translations';
+import SETTINGS_MODAL from './SettingsModal.constants';
 
 interface ISettingsModal {
 	isOpen: boolean;
@@ -29,7 +29,7 @@ interface ISettingsModal {
 
 const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 	const { PRACTICE_OPTIONS, TIMER_OPTIONS } = SETTINGS_MODAL;
-	const { t } = useTranslation(NS.HOME);
+	const { t } = useTranslation('home');
 	const toast = useToast();
 	const [isMd] = useMediaQuery('(min-width: 768px)');
 	const [type, setType] = useState<string>(PRACTICE_OPTIONS[0].value);
@@ -87,7 +87,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 						</FormLabel>
 						<Select
 							id='type'
-							data-testid='type-selector'
+							data-testid={SETTINGS_MODAL.PRACTICE_TEST_ID}
 							aria-label={t(SETTINGS_MODAL.PRACTICE_ARIA)}
 							size='lg'
 							value={type}
@@ -106,7 +106,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 						</FormLabel>
 						<Select
 							id='timer'
-							data-testid='timer-selector'
+							data-testid={SETTINGS_MODAL.TIMER_TEST_ID}
 							aria-label={t(SETTINGS_MODAL.TIMER_ARIA)}
 							size='lg'
 							value={timer}
@@ -125,7 +125,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 						<input
 							multiple
 							id='references'
-							data-testid='references-loader'
+							data-testid={SETTINGS_MODAL.REFERENCES_TEST_ID}
 							accept='image/*'
 							type='file'
 							style={{ display: 'none' }}
@@ -168,7 +168,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 							<Text>{t(SETTINGS_MODAL.RANDOM_LABEL)}</Text>
 							<Checkbox
 								id='random'
-								data-testid='shuffle-checkbox'
+								data-testid={SETTINGS_MODAL.RANDOM_TEST_ID}
 								aria-label={t(SETTINGS_MODAL.RANDOM_ARIA)}
 								colorScheme='teal'
 								checked={shuffle}
@@ -180,7 +180,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 				<ModalFooter>
 					<Button
 						isFullWidth
-						data-testid='settings-start'
+						data-testid={SETTINGS_MODAL.BTN_TEST_ID}
 						aria-label={t(SETTINGS_MODAL.BTN_ARIA)}
 						colorScheme='teal'
 						onClick={onSubmit}

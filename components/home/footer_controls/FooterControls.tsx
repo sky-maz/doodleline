@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import useTranslation from 'next-translate/useTranslation';
 import React, { FC, useEffect, useState } from 'react';
 import { Progress, IconButton, Flex } from '@chakra-ui/react';
 import {
@@ -9,9 +10,9 @@ import {
 	FaCog,
 	FaQuestion,
 } from 'react-icons/fa';
-import useTranslation from 'next-translate/useTranslation';
-import { NS, FOOTER_CONTROLS } from '@constants/translations';
 import { useDebounceEffect, useEventListener } from 'ahooks';
+
+import FOOTER_CONTROLS from './FooterControls.constants';
 
 interface FooterControlsProps {
 	threshold: number;
@@ -28,7 +29,7 @@ const FooterControls: FC<FooterControlsProps> = ({
 	onPrevRef,
 	onNextRef,
 }) => {
-	const { t } = useTranslation(NS.HOME);
+	const { t } = useTranslation('home');
 	const [timer, setTimer] = useState<number>(0);
 	const [isPaused, setIsPaused] = useState<boolean>(true);
 
@@ -79,7 +80,7 @@ const FooterControls: FC<FooterControlsProps> = ({
 
 	return (
 		<Flex
-			data-testid='footer-controls'
+			data-testid={FOOTER_CONTROLS.TEST_ID}
 			h='100%'
 			w='100%'
 			direction='column'
@@ -95,8 +96,9 @@ const FooterControls: FC<FooterControlsProps> = ({
 				<Flex flex='1' justify='center'>
 					<IconButton
 						isRound
-						data-testid='customize-btn'
 						aria-label={t(FOOTER_CONTROLS.CUSTOMIZE_ARIA)}
+						data-testid={FOOTER_CONTROLS.CUSTOMIZE_TEST_ID}
+						colorScheme='teal'
 						size='md'
 						icon={<FaCog />}
 						onClick={onToggleCustomize}
@@ -105,8 +107,8 @@ const FooterControls: FC<FooterControlsProps> = ({
 				<Flex align='center' justify='center' gap={4}>
 					<IconButton
 						isRound
-						data-testid='prev-btn'
 						aria-label={t(FOOTER_CONTROLS.PREV_ARIA)}
+						data-testid={FOOTER_CONTROLS.PREV_TEST_ID}
 						colorScheme='teal'
 						size='md'
 						icon={<FaStepBackward />}
@@ -116,12 +118,12 @@ const FooterControls: FC<FooterControlsProps> = ({
 						<IconButton
 							isRound
 							id={isPaused ? 'play-btn' : 'pause-btn'}
-							data-testid='play-btn'
 							aria-label={t(
 								isPaused
 									? FOOTER_CONTROLS.PLAY_ARIA
 									: FOOTER_CONTROLS.PAUSE_ARIA
 							)}
+							data-testid={FOOTER_CONTROLS.TOGGLE_TEST_ID}
 							colorScheme='teal'
 							size='lg'
 							icon={isPaused ? <FaPlay /> : <FaPause />}
@@ -130,8 +132,8 @@ const FooterControls: FC<FooterControlsProps> = ({
 					)}
 					<IconButton
 						isRound
-						data-testid='next-btn'
 						aria-label={t(FOOTER_CONTROLS.NEXT_ARIA)}
+						data-testid={FOOTER_CONTROLS.NEXT_TEST_ID}
 						colorScheme='teal'
 						size='md'
 						icon={<FaStepForward />}
@@ -141,8 +143,9 @@ const FooterControls: FC<FooterControlsProps> = ({
 				<Flex flex='1' justify='center'>
 					<IconButton
 						isRound
-						data-testid='about-btn'
 						aria-label={t(FOOTER_CONTROLS.ABOUT_ARIA)}
+						data-testid={FOOTER_CONTROLS.ABOUT_TEST_ID}
+						colorScheme='teal'
 						size='md'
 						icon={<FaQuestion />}
 						onClick={onToggleAbout}

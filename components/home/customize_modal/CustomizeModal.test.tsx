@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
-import defaultTheme from '@config/theme';
+import theme from '@utils/theme';
 import CustomizeModal from './CustomizeModal';
 
 let isMobile = [false];
@@ -23,7 +23,7 @@ describe('<CustomizeModal /> component ', () => {
 
 		// Execute
 		const view = render(
-			<ChakraProvider theme={defaultTheme}>
+			<ChakraProvider theme={theme}>
 				<CustomizeModal isOpen={true} onClose={onCloseMock} />
 			</ChakraProvider>
 		);
@@ -39,7 +39,7 @@ describe('<CustomizeModal /> component ', () => {
 
 		// Execute
 		const view = render(
-			<ChakraProvider theme={defaultTheme}>
+			<ChakraProvider theme={theme}>
 				<CustomizeModal isOpen={true} onClose={onCloseMock} />
 			</ChakraProvider>
 		);
@@ -56,7 +56,7 @@ describe('<CustomizeModal /> component ', () => {
 
 		// Execute
 		const view = render(
-			<ChakraProvider theme={defaultTheme}>
+			<ChakraProvider theme={theme}>
 				<CustomizeModal isOpen={true} onClose={onCloseMock} />
 			</ChakraProvider>
 		);
