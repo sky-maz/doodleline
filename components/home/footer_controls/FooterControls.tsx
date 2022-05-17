@@ -10,7 +10,7 @@ import {
 	FaCog,
 	FaQuestion,
 } from 'react-icons/fa';
-import { useDebounceEffect, useEventListener } from 'ahooks';
+import { useDebounceEffect } from 'ahooks';
 
 import FOOTER_CONTROLS from './FooterControls.constants';
 
@@ -54,23 +54,6 @@ const FooterControls: FC<FooterControlsProps> = ({
 		[isPaused, timer],
 		{ wait: 1000 }
 	);
-
-	useEventListener('keydown', (e) => {
-		switch (e.code) {
-			case 'ShiftLeft':
-				return onToggleCustomize();
-			case 'Tab':
-				return onToggleAbout();
-			case 'ArrowLeft':
-				return onPrev();
-			case 'ArrowRight':
-				return onNext();
-			case 'Space':
-				return onTogglePause();
-			default:
-				return;
-		}
-	});
 
 	useEffect(() => {
 		if (threshold && timer > threshold) {

@@ -140,48 +140,6 @@ describe('<FooterControls /> component ', () => {
 		expect(view).toMatchSnapshot();
 	});
 
-	it('should allow user to interact with controls with keyboard', () => {
-		// Setup
-		const onToggleCustomizeMock = jest.fn();
-		const onToggleAboutMock = jest.fn();
-		const onPrevRefMock = jest.fn();
-		const onNextRefMock = jest.fn();
-
-		// Execute
-		const view = render(
-			<ChakraProvider theme={theme}>
-				<FooterControls
-					threshold={1}
-					onToggleCustomize={onToggleCustomizeMock}
-					onToggleAbout={onToggleAboutMock}
-					onPrevRef={onPrevRefMock}
-					onNextRef={onNextRefMock}
-				/>
-			</ChakraProvider>
-		);
-
-		const footerControls = screen.getByTestId(FOOTER_CONTROLS.TEST_ID);
-		fireEvent.keyDown(footerControls, { code: 'example' });
-		fireEvent.keyDown(footerControls, { code: 'ShiftLeft' });
-		expect(onToggleCustomizeMock).toBeCalledTimes(1);
-
-		fireEvent.keyDown(footerControls, { code: 'Tab' });
-		expect(onToggleAboutMock).toBeCalledTimes(1);
-
-		fireEvent.keyDown(footerControls, { code: 'ArrowLeft' });
-		expect(onPrevRefMock).toBeCalledTimes(1);
-
-		fireEvent.keyDown(footerControls, { code: 'ArrowRight' });
-		expect(onNextRefMock).toBeCalledTimes(1);
-
-		fireEvent.keyDown(footerControls, { code: 'Space' });
-		const toggleBtn = screen.getByTestId(FOOTER_CONTROLS.TOGGLE_TEST_ID);
-		expect(toggleBtn.id).toBe('pause-btn');
-
-		// Validation
-		expect(view).toMatchSnapshot();
-	});
-
 	it('should call onNextRef when treshold is met', async () => {
 		// Setup
 		const onToggleCustomizeMock = jest.fn();
