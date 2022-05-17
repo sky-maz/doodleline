@@ -11,8 +11,7 @@
     "check:lint": "eslint . --ext ts --ext tsx",
     "check:types": "tsc --pretty --noEmit",
     "check:all": "yarn check:format && yarn check:lint && yarn check:types",
-    "test:snapshots": "jest -u",
-    "test:coverage": "jest --coverage"
+    "test:all": "jest -u --coverage"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.8",
@@ -23,6 +22,7 @@
     "framer-motion": "^6.2.8",
     "lodash": "^4.17.21",
     "next": "12.1.4",
+    "next-translate": "^1.4.0",
     "paper": "^0.12.15",
     "react": "18.0.0",
     "react-dom": "18.0.0",

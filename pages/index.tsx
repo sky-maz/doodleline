@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import type { NextPage } from 'next';
+import { NextPage } from 'next';
 import Head from 'next/head';
+import React, { useState } from 'react';
 import { Box, Flex } from '@chakra-ui/react';
+import { useToggle } from 'ahooks';
 
-import { Settings } from '@utils/constants';
+import { getServerSideProps } from '@utils/server_side_props';
 import {
 	ReferencesCanvas,
 	FooterControls,
@@ -11,23 +12,14 @@ import {
 	CustomizeModal,
 	AboutModal,
 } from '@components/home';
-import useToggle from '@hooks/useToggle';
 
-/**
- *
- * TODOs:
- * ReferencesCanvas fit reference on div (Pending)
- * Custom theme colors & light/dark modes (Pending)
- * Localization en/sp (Pending)
- *
- **/
-
+type Settings = { type: string; timer: number; imgs: File[] };
 const HomePage: NextPage = () => {
 	const [settings, setSettings] = useState<Settings>();
 	const [current, setCurrent] = useState<number>(0);
-	const { value: showSettings, onToggle: onToggleSettings } = useToggle(true);
-	const { value: showCustomize, onToggle: onToggleCustomize } = useToggle();
-	const { value: showAbout, onToggle: onToggleAbout } = useToggle();
+	const [showSettings, { toggle: onToggleSettings }] = useToggle(true);
+	const [showCustomize, { toggle: onToggleCustomize }] = useToggle();
+	const [showAbout, { toggle: onToggleAbout }] = useToggle();
 
 	const onPrevRef = () => {
 		if (current > 0) {
@@ -38,6 +30,9 @@ const HomePage: NextPage = () => {
 	const onNextRef = () => {
 		if (settings && current < settings.imgs.length) {
 			setCurrent(current + 1);
+		} else if (settings && current >= settings.imgs.length) {
+			setSettings(undefined);
+			onToggleSettings();
 		}
 	};
 
@@ -50,8 +45,10 @@ const HomePage: NextPage = () => {
 			</Head>
 
 			<Flex direction='column' h='100vh' w='100vw'>
-				<Box flex={1} bg='tomato'></Box>
-				<Box h='8em'>
+				<Flex h='calc(100vh - 6em)' w='100vw' gap='1em'>
+					<ReferencesCanvas reference={settings?.imgs[current]} />
+				</Flex>
+				<Box h='6em' w='100vw'>
 					<FooterControls
 						threshold={settings?.timer ?? 0}
 						onToggleCustomize={onToggleCustomize}
@@ -64,12 +61,14 @@ const HomePage: NextPage = () => {
 			<SettingsModal
 				isOpen={showSettings}
 				onClose={onToggleSettings}
-				onStart={(settings) => setSettings(settings)}
+				onStart={(type, timer, imgs) => setSettings({ type, timer, imgs })}
 			/>
 			<CustomizeModal isOpen={showCustomize} onClose={onToggleCustomize} />
 			<AboutModal isOpen={showAbout} onClose={onToggleAbout} />
 		</>
 	);
 };
+
+export { getServerSideProps };
 
 export default HomePage;

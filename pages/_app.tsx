@@ -1,14 +1,13 @@
 import '@sass/globals.scss';
+import { AppProps } from 'next/app';
 import React from 'react';
-import type { AppProps } from 'next/app';
-import { ChakraProvider } from '@chakra-ui/react';
 
-import defaultTheme from '@config/theme';
+import { ChakraUI } from '@common/ChakraUI';
 
 const App = ({ Component, pageProps }: AppProps) => (
-	<ChakraProvider theme={defaultTheme}>
+	<ChakraUI cookies={pageProps.cookies}>
 		<Component {...pageProps} />
-	</ChakraProvider>
+	</ChakraUI>
 );
 
 export default App;
