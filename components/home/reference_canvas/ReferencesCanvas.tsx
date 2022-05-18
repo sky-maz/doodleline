@@ -28,7 +28,7 @@ type Events =
 	| TouchEvent
 	| PointerEvent;
 
-// Reset position correctly
+// TODO: Reset position correctly
 const ReferencesCanvas: FC = () => {
 	const { t } = useTranslation('home');
 	const dragControls = useDragControls();
