@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import useTranslation from 'next-translate/useTranslation';
 import React, { FC, useEffect, useState } from 'react';
 import { motion, useDragControls } from 'framer-motion';
@@ -17,7 +18,7 @@ import { MdClear, MdGrid4X4, MdRedo, MdUndo } from 'react-icons/md';
 import { setReader } from '@utils/reader';
 
 import REFERENCES_CANVAS from './ReferencesCanvas.constants';
-import { useHomeContext } from '@reducers/home/HomeProvider';
+import { useHomeContext } from '@components/home/home_provider/HomeProvider';
 
 type Events =
 	| React.MouseEvent
@@ -27,6 +28,7 @@ type Events =
 	| TouchEvent
 	| PointerEvent;
 
+// Reset position correctly
 const ReferencesCanvas: FC = () => {
 	const { t } = useTranslation('home');
 	const dragControls = useDragControls();

@@ -3,7 +3,6 @@ import Head from 'next/head';
 import React from 'react';
 import { getServerSideProps } from '@utils/server_side_props';
 
-import { HomeProvider } from '@reducers/home/HomeProvider';
 import HomeView from '@components/home';
 
 const HomePage: NextPage = () => {
@@ -15,9 +14,7 @@ const HomePage: NextPage = () => {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<HomeProvider>
-				<HomeView />
-			</HomeProvider>
+			<HomeView />
 		</>
 	);
 };

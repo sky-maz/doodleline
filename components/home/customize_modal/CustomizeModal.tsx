@@ -21,8 +21,9 @@ import {
 import { FaGlobe, FaMoon, FaPalette, FaSun } from 'react-icons/fa';
 
 import CUSTOMIZE_MODAL from './CustomizeModal.constants';
-import { useHomeContext } from '@reducers/home/HomeProvider';
+import { useHomeContext } from '@components/home/home_provider/HomeProvider';
 
+// TODO: Add dynamic and persistent colors
 const CustomizeModal: FC = () => {
 	const router = useRouter();
 	const { t } = useTranslation('home');

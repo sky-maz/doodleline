@@ -20,7 +20,7 @@ import {
 import { FaCheckCircle, FaCloudUploadAlt } from 'react-icons/fa';
 
 import SETTINGS_MODAL from './SettingsModal.constants';
-import { useHomeContext } from '@reducers/home/HomeProvider';
+import { useHomeContext } from '@components/home/home_provider/HomeProvider';
 
 const SettingsModal: FC = () => {
 	const { PRACTICE_OPTIONS, TIMER_OPTIONS } = SETTINGS_MODAL;

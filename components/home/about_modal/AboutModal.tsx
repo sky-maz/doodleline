@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react';
 
 import ABOUT_MODAL from './AboutModal.constants';
-import { useHomeContext } from '@reducers/home/HomeProvider';
+import { useHomeContext } from '@components/home/home_provider/HomeProvider';
 
 const AboutModal: FC = () => {
 	const router = useRouter();

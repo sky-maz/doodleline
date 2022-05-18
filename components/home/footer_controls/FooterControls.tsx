@@ -13,7 +13,7 @@ import {
 import { useDebounceEffect } from 'ahooks';
 
 import FOOTER_CONTROLS from './FooterControls.constants';
-import { useHomeContext } from '@reducers/home/HomeProvider';
+import { useHomeContext } from '@components/home/home_provider/HomeProvider';
 
 const FooterControls: FC = () => {
 	const { t } = useTranslation('home');
@@ -38,7 +38,7 @@ const FooterControls: FC = () => {
 	};
 
 	const onNext = () => {
-		// TODO: Fix this:v
+		// TODO: Fix this logic
 		if (settings && current < settings.images.length - 1) {
 			setTimer(0);
 			dispatch(updateCurrent(current + 1));

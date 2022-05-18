@@ -10,7 +10,6 @@ const customJestConfig = {
 	setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
 	moduleDirectories: ['node_modules', 'src'],
 	moduleNameMapper: {
-		'@reducers/(.*)': '<rootDir>/reducers/$1',
 		'@locales/(.*)': '<rootDir>/locales/$1',
   	'@utils/(.*)': '<rootDir>/utils/$1'
   },
