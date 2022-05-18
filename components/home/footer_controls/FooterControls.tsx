@@ -13,41 +13,46 @@ import {
 import { useDebounceEffect } from 'ahooks';
 
 import FOOTER_CONTROLS from './FooterControls.constants';
+import { useHomeContext } from '@reducers/home/HomeProvider';
 
-interface FooterControlsProps {
-	threshold: number;
-	onToggleCustomize: () => void;
-	onToggleAbout: () => void;
-	onPrevRef: () => void;
-	onNextRef: () => void;
-}
-
-const FooterControls: FC<FooterControlsProps> = ({
-	threshold,
-	onToggleCustomize,
-	onToggleAbout,
-	onPrevRef,
-	onNextRef,
-}) => {
+const FooterControls: FC = () => {
 	const { t } = useTranslation('home');
 	const [timer, setTimer] = useState<number>(0);
 	const [isPaused, setIsPaused] = useState<boolean>(true);
+	const {
+		state: { settings, current },
+		dispatch,
+		updateCurrent,
+		toggleCustomize,
+		toggleAbout,
+		resetHome,
+	} = useHomeContext();
+
+	const hasThreshold = settings && settings.timeThreshold > 0;
 
 	const onPrev = () => {
-		setTimer(0);
-		onPrevRef();
+		if (settings && current > 0) {
+			setTimer(0);
+			dispatch(updateCurrent(current - 1));
+		}
 	};
 
 	const onNext = () => {
-		setTimer(0);
-		onNextRef();
+		// TODO: Fix this:v
+		if (settings && current < settings.images.length - 1) {
+			setTimer(0);
+			dispatch(updateCurrent(current + 1));
+		} else if (settings && current >= settings.images.length) {
+			setTimer(0);
+			dispatch(resetHome());
+		}
 	};
 
 	const onTogglePause = () => setIsPaused(!isPaused);
 
 	useDebounceEffect(
 		() => {
-			if (threshold && !isPaused) {
+			if (settings && !isPaused) {
 				setTimer(timer + 1);
 			}
 		},
@@ -56,7 +61,7 @@ const FooterControls: FC<FooterControlsProps> = ({
 	);
 
 	useEffect(() => {
-		if (threshold && timer > threshold) {
+		if (settings && timer > settings.timeThreshold) {
 			onNext();
 		}
 	}, [timer]);
@@ -64,17 +69,20 @@ const FooterControls: FC<FooterControlsProps> = ({
 	return (
 		<Flex
 			data-testid={FOOTER_CONTROLS.TEST_ID}
+			bg='blackAlpha.300'
 			h='100%'
 			w='100%'
 			direction='column'
 			justify='stretch'
 		>
-			<Progress
-				colorScheme='teal'
-				size='sm'
-				width='100%'
-				value={(timer / threshold) * 100}
-			/>
+			{hasThreshold && (
+				<Progress
+					colorScheme='teal'
+					size='sm'
+					width='100%'
+					value={(timer / settings.timeThreshold) * 100}
+				/>
+			)}
 			<Flex h='100%' w='100%' alignItems='center'>
 				<Flex flex='1' justify='center'>
 					<IconButton
@@ -84,7 +92,7 @@ const FooterControls: FC<FooterControlsProps> = ({
 						colorScheme='teal'
 						size='md'
 						icon={<FaCog />}
-						onClick={onToggleCustomize}
+						onClick={() => dispatch(toggleCustomize())}
 					/>
 				</Flex>
 				<Flex align='center' justify='center' gap={4}>
@@ -97,7 +105,7 @@ const FooterControls: FC<FooterControlsProps> = ({
 						icon={<FaStepBackward />}
 						onClick={onPrev}
 					/>
-					{threshold > 0 && (
+					{hasThreshold && (
 						<IconButton
 							isRound
 							id={isPaused ? 'play-btn' : 'pause-btn'}
@@ -131,7 +139,7 @@ const FooterControls: FC<FooterControlsProps> = ({
 						colorScheme='teal'
 						size='md'
 						icon={<FaQuestion />}
-						onClick={onToggleAbout}
+						onClick={() => dispatch(toggleAbout())}
 					/>
 				</Flex>
 			</Flex>

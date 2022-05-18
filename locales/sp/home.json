@@ -23,7 +23,7 @@
   "cm_language_label": "Lenguaje",
   "cm_mode_label": "Modo del tema",
   "cm_color_label": "Color del tema",
-  "rc_no_references_msg": "No se han encontrado imagenes cargadas",
+  "rc_no_reference_msg": "No se han encontrado imagenes cargadas",
   "rc_reference_aria": "Referencia",
   "rc_toggle_grid_aria": "Toggle grid",
   "rc_reset_aria": "Reiniciar posición",

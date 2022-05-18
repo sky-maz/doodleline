@@ -20,21 +20,24 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@sass/*": [
-        "sass/*"
-      ],
-      "@locales/*": [
-        "locales/*"
-      ],
       "@common/*": [
         "./components/_common/*"
       ],
       "@components/*": [
         "./components/*"
       ],
+      "@reducers/*": [
+        "./reducers/*"
+      ],
+      "@locales/*": [
+        "locales/*"
+      ],
       "@utils/*": [
         "./utils/*"
-      ]
+      ],
+      "@sass/*": [
+        "sass/*"
+      ],
     }
   },
   "include": [

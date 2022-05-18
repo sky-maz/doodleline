@@ -21,21 +21,22 @@ import {
 } from '@chakra-ui/react';
 
 import ABOUT_MODAL from './AboutModal.constants';
+import { useHomeContext } from '@reducers/home/HomeProvider';
 
-interface IAboutModal {
-	isOpen: boolean;
-	onClose: () => void;
-}
-
-const AboutModal: FC<IAboutModal> = ({ isOpen, onClose }) => {
+const AboutModal: FC = () => {
+	const router = useRouter();
 	const { t } = useTranslation('home');
 	const [isMd] = useMediaQuery('(min-width: 768px)');
-	const router = useRouter();
+	const {
+		state: { showAbout },
+		dispatch,
+		toggleAbout,
+	} = useHomeContext();
 
 	return (
 		<Modal
-			isOpen={isOpen}
-			onClose={onClose}
+			isOpen={showAbout}
+			onClose={() => dispatch(toggleAbout())}
 			isCentered={true}
 			motionPreset='slideInBottom'
 			size='4xl'

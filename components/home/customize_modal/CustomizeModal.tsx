@@ -1,5 +1,7 @@
-import React, { FC, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { FC, useState, useEffect } from 'react';
 import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
 import {
 	useMediaQuery,
 	useColorMode,
@@ -19,24 +21,31 @@ import {
 import { FaGlobe, FaMoon, FaPalette, FaSun } from 'react-icons/fa';
 
 import CUSTOMIZE_MODAL from './CustomizeModal.constants';
+import { useHomeContext } from '@reducers/home/HomeProvider';
 
-interface ICustomizeModal {
-	isOpen: boolean;
-	onClose: () => void;
-}
-
-const CustomizeModal: FC<ICustomizeModal> = ({ isOpen, onClose }) => {
+const CustomizeModal: FC = () => {
+	const router = useRouter();
 	const { t } = useTranslation('home');
 	const [isMd] = useMediaQuery('(min-width: 768px)');
 	const [language, setLanguage] = useState<string>('en');
 	const { colorMode, toggleColorMode } = useColorMode();
+	const {
+		state: { showCustomize },
+		dispatch,
+		toggleCustomize,
+	} = useHomeContext();
+
 	const isDark = colorMode === 'dark';
 	const CurrentMode = isDark ? FaMoon : FaSun;
 
+	useEffect(() => {
+		router.push('/', undefined, { locale: language });
+	}, [language]);
+
 	return (
 		<Modal
-			isOpen={isOpen}
-			onClose={onClose}
+			isOpen={showCustomize}
+			onClose={() => dispatch(toggleCustomize())}
 			isCentered={true}
 			colorScheme='teal'
 			motionPreset='slideInBottom'

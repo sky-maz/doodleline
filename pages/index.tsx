@@ -1,41 +1,12 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
-import React, { useState } from 'react';
-import { Box, Flex } from '@chakra-ui/react';
-import { useToggle } from 'ahooks';
-
+import React from 'react';
 import { getServerSideProps } from '@utils/server_side_props';
-import {
-	ReferencesCanvas,
-	FooterControls,
-	SettingsModal,
-	CustomizeModal,
-	AboutModal,
-} from '@components/home';
 
-type Settings = { type: string; timer: number; imgs: File[] };
+import { HomeProvider } from '@reducers/home/HomeProvider';
+import HomeView from '@components/home';
+
 const HomePage: NextPage = () => {
-	const [settings, setSettings] = useState<Settings>();
-	const [current, setCurrent] = useState<number>(0);
-	const [showSettings, { toggle: onToggleSettings }] = useToggle(true);
-	const [showCustomize, { toggle: onToggleCustomize }] = useToggle();
-	const [showAbout, { toggle: onToggleAbout }] = useToggle();
-
-	const onPrevRef = () => {
-		if (current > 0) {
-			setCurrent(current - 1);
-		}
-	};
-
-	const onNextRef = () => {
-		if (settings && current < settings.imgs.length) {
-			setCurrent(current + 1);
-		} else if (settings && current >= settings.imgs.length) {
-			setSettings(undefined);
-			onToggleSettings();
-		}
-	};
-
 	return (
 		<>
 			<Head>
@@ -44,27 +15,9 @@ const HomePage: NextPage = () => {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<Flex direction='column' h='100vh' w='100vw'>
-				<Flex h='calc(100vh - 6em)' w='100vw' gap='1em'>
-					<ReferencesCanvas reference={settings?.imgs[current]} />
-				</Flex>
-				<Box h='6em' w='100vw'>
-					<FooterControls
-						threshold={settings?.timer ?? 0}
-						onToggleCustomize={onToggleCustomize}
-						onToggleAbout={onToggleAbout}
-						onPrevRef={onPrevRef}
-						onNextRef={onNextRef}
-					/>
-				</Box>
-			</Flex>
-			<SettingsModal
-				isOpen={showSettings}
-				onClose={onToggleSettings}
-				onStart={(type, timer, imgs) => setSettings({ type, timer, imgs })}
-			/>
-			<CustomizeModal isOpen={showCustomize} onClose={onToggleCustomize} />
-			<AboutModal isOpen={showAbout} onClose={onToggleAbout} />
+			<HomeProvider>
+				<HomeView />
+			</HomeProvider>
 		</>
 	);
 };

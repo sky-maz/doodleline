@@ -14,13 +14,10 @@ import {
 } from '@chakra-ui/react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { MdClear, MdGrid4X4, MdRedo, MdUndo } from 'react-icons/md';
-
 import { setReader } from '@utils/reader';
-import REFERENCES_CANVAS from './ReferencesCanvas.constants';
 
-interface IReferencesCanvas {
-	reference?: File;
-}
+import REFERENCES_CANVAS from './ReferencesCanvas.constants';
+import { useHomeContext } from '@reducers/home/HomeProvider';
 
 type Events =
 	| React.MouseEvent
@@ -30,12 +27,17 @@ type Events =
 	| TouchEvent
 	| PointerEvent;
 
-const ReferencesCanvas: FC<IReferencesCanvas> = ({ reference }) => {
+const ReferencesCanvas: FC = () => {
 	const { t } = useTranslation('home');
 	const dragControls = useDragControls();
 	const [grid, setGrid] = useState<boolean>(false);
 	const [rotation, setRotation] = useState<number>(0);
 	const [zoom, setZoom] = useState<number>(50);
+	const {
+		state: { settings, current },
+	} = useHomeContext();
+
+	const hasReferences = settings && settings.images.length > 0;
 	const refCanvasId = 'reference-item';
 
 	const startDrag = (e: Events) => dragControls.start(e, {});
@@ -50,11 +52,11 @@ const ReferencesCanvas: FC<IReferencesCanvas> = ({ reference }) => {
 	};
 
 	useEffect(() => {
-		if (reference) {
-			setReader(refCanvasId, reference);
+		if (hasReferences) {
+			setReader(refCanvasId, settings.images[current]);
 			resetPosition();
 		}
-	}, [reference]);
+	}, [settings, current]);
 
 	return (
 		<Flex
@@ -64,7 +66,7 @@ const ReferencesCanvas: FC<IReferencesCanvas> = ({ reference }) => {
 			justify='center'
 			overflow='hidden'
 		>
-			{reference ? (
+			{hasReferences ? (
 				<>
 					<Box
 						as={motion.img}

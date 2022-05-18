@@ -20,14 +20,9 @@ import {
 import { FaCheckCircle, FaCloudUploadAlt } from 'react-icons/fa';
 
 import SETTINGS_MODAL from './SettingsModal.constants';
+import { useHomeContext } from '@reducers/home/HomeProvider';
 
-interface ISettingsModal {
-	isOpen: boolean;
-	onClose: () => void;
-	onStart: (type: string, timer: number, files: File[]) => void;
-}
-
-const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
+const SettingsModal: FC = () => {
 	const { PRACTICE_OPTIONS, TIMER_OPTIONS } = SETTINGS_MODAL;
 	const { t } = useTranslation('home');
 	const toast = useToast();
@@ -36,7 +31,16 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 	const [timer, setTimer] = useState<number>(TIMER_OPTIONS[0].value);
 	const [files, setFiles] = useState<FileList | null>(null);
 	const [shuffle, setShuffle] = useState<boolean>(false);
+	const {
+		state: { showSettings },
+		dispatch,
+		toggleSettings,
+		setSettings,
+	} = useHomeContext();
+
 	const hasFiles = files && files.length > 0;
+
+	const onClose = () => dispatch(toggleSettings());
 
 	const onSubmit = () => {
 		const hasType = PRACTICE_OPTIONS.some((opt) => opt.value === type);
@@ -46,7 +50,13 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 			for (let i = 0; i < files.length; i++) {
 				filesArr.push(files[i]);
 			}
-			onStart(type, timer, shuffle ? _.shuffle(filesArr) : filesArr);
+			dispatch(
+				setSettings({
+					type,
+					timeThreshold: timer,
+					images: shuffle ? _.shuffle(filesArr) : filesArr,
+				})
+			);
 			onClose();
 		} else {
 			toast({
@@ -62,7 +72,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, onClose, onStart }) => {
 
 	return (
 		<Modal
-			isOpen={isOpen}
+			isOpen={showSettings}
 			onClose={onClose}
 			blockScrollOnMount={true}
 			closeOnEsc={false}
