@@ -38,14 +38,11 @@ const FooterControls: FC = () => {
 	};
 
 	const onNext = () => {
-		// TODO: Fix this logic
-		if (settings && current < settings.images.length - 1) {
-			setTimer(0);
-			dispatch(updateCurrent(current + 1));
-		} else if (settings && current >= settings.images.length) {
-			setTimer(0);
-			dispatch(resetHome());
-		}
+		if (!settings) return;
+
+		setTimer(0);
+		const lastIndex = settings.images.length - 1;
+		dispatch(current < lastIndex ? updateCurrent(current + 1) : resetHome());
 	};
 
 	const onTogglePause = () => setIsPaused(!isPaused);

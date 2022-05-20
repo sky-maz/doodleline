@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import useTranslation from 'next-translate/useTranslation';
 import React, { FC, useEffect, useState } from 'react';
-import { motion, useDragControls } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
 	Box,
 	Flex,
@@ -20,18 +20,8 @@ import { setReader } from '@utils/reader';
 import REFERENCES_CANVAS from './ReferencesCanvas.constants';
 import { useHomeContext } from '@components/home/home_provider/HomeProvider';
 
-type Events =
-	| React.MouseEvent
-	| React.TouchEvent
-	| React.PointerEvent
-	| MouseEvent
-	| TouchEvent
-	| PointerEvent;
-
-// TODO: Reset position correctly
 const ReferencesCanvas: FC = () => {
 	const { t } = useTranslation('home');
-	const dragControls = useDragControls();
 	const [grid, setGrid] = useState<boolean>(false);
 	const [rotation, setRotation] = useState<number>(0);
 	const [zoom, setZoom] = useState<number>(50);
@@ -42,15 +32,9 @@ const ReferencesCanvas: FC = () => {
 	const hasReferences = settings && settings.images.length > 0;
 	const refCanvasId = 'reference-item';
 
-	const startDrag = (e: Events) => dragControls.start(e, {});
-
 	const resetPosition = () => {
-		const imgElement = document.getElementById(refCanvasId);
-		if (imgElement) {
-			setRotation(0);
-			setZoom(50);
-			imgElement.style.transform = 'none';
-		}
+		setRotation(0);
+		setZoom(50);
 	};
 
 	useEffect(() => {
@@ -76,9 +60,6 @@ const ReferencesCanvas: FC = () => {
 						data-testid={REFERENCES_CANVAS.REFERENCE_TEST_ID}
 						aria-label={t(REFERENCES_CANVAS.REFERENCE_ARIA)}
 						alt={t(REFERENCES_CANVAS.REFERENCE_ARIA)}
-						drag
-						dragControls={dragControls}
-						dragMomentum={false}
 						animate={{ scale: zoom / 50, rotate: rotation }}
 						h='auto'
 						w='auto'
@@ -86,7 +67,6 @@ const ReferencesCanvas: FC = () => {
 						maxW='100%'
 					/>
 					<Flex
-						onPointerDown={startDrag}
 						pos='absolute'
 						direction='column'
 						alignSelf='flex-start'
