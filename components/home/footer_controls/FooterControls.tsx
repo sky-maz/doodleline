@@ -15,7 +15,11 @@ import { useDebounceEffect } from 'ahooks';
 import FOOTER_CONTROLS from './FooterControls.constants';
 import { useHomeContext } from '@components/home/home_provider/HomeProvider';
 
-const FooterControls: FC = () => {
+interface FooterControlsProps {
+	colorScheme: string;
+}
+
+const FooterControls: FC<FooterControlsProps> = ({ colorScheme }) => {
 	const { t } = useTranslation('home');
 	const [timer, setTimer] = useState<number>(0);
 	const [isPaused, setIsPaused] = useState<boolean>(true);
@@ -66,7 +70,6 @@ const FooterControls: FC = () => {
 	return (
 		<Flex
 			data-testid={FOOTER_CONTROLS.TEST_ID}
-			bg='blackAlpha.300'
 			h='100%'
 			w='100%'
 			direction='column'
@@ -74,7 +77,7 @@ const FooterControls: FC = () => {
 		>
 			{hasThreshold && (
 				<Progress
-					colorScheme='teal'
+					colorScheme={colorScheme}
 					size='sm'
 					width='100%'
 					value={(timer / settings.timeThreshold) * 100}
@@ -86,7 +89,7 @@ const FooterControls: FC = () => {
 						isRound
 						aria-label={t(FOOTER_CONTROLS.CUSTOMIZE_ARIA)}
 						data-testid={FOOTER_CONTROLS.CUSTOMIZE_TEST_ID}
-						colorScheme='teal'
+						colorScheme={colorScheme}
 						size='md'
 						icon={<FaCog />}
 						onClick={() => dispatch(toggleCustomize())}
@@ -97,7 +100,7 @@ const FooterControls: FC = () => {
 						isRound
 						aria-label={t(FOOTER_CONTROLS.PREV_ARIA)}
 						data-testid={FOOTER_CONTROLS.PREV_TEST_ID}
-						colorScheme='teal'
+						colorScheme={colorScheme}
 						size='md'
 						icon={<FaStepBackward />}
 						onClick={onPrev}
@@ -112,7 +115,7 @@ const FooterControls: FC = () => {
 									: FOOTER_CONTROLS.PAUSE_ARIA
 							)}
 							data-testid={FOOTER_CONTROLS.TOGGLE_TEST_ID}
-							colorScheme='teal'
+							colorScheme={colorScheme}
 							size='lg'
 							icon={isPaused ? <FaPlay /> : <FaPause />}
 							onClick={onTogglePause}
@@ -122,7 +125,7 @@ const FooterControls: FC = () => {
 						isRound
 						aria-label={t(FOOTER_CONTROLS.NEXT_ARIA)}
 						data-testid={FOOTER_CONTROLS.NEXT_TEST_ID}
-						colorScheme='teal'
+						colorScheme={colorScheme}
 						size='md'
 						icon={<FaStepForward />}
 						onClick={onNext}
@@ -133,7 +136,7 @@ const FooterControls: FC = () => {
 						isRound
 						aria-label={t(FOOTER_CONTROLS.ABOUT_ARIA)}
 						data-testid={FOOTER_CONTROLS.ABOUT_TEST_ID}
-						colorScheme='teal'
+						colorScheme={colorScheme}
 						size='md'
 						icon={<FaQuestion />}
 						onClick={() => dispatch(toggleAbout())}

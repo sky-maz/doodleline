@@ -23,7 +23,11 @@ import {
 import ABOUT_MODAL from './AboutModal.constants';
 import { useHomeContext } from '@components/home/home_provider/HomeProvider';
 
-const AboutModal: FC = () => {
+interface AboutModalProps {
+	colorScheme: string;
+}
+
+const AboutModal: FC<AboutModalProps> = ({ colorScheme }) => {
 	const router = useRouter();
 	const { t } = useTranslation('home');
 	const [isMd] = useMediaQuery('(min-width: 768px)');
@@ -101,7 +105,7 @@ const AboutModal: FC = () => {
 								aria-label={key}
 								data-testid={key}
 								size='sm'
-								colorScheme='teal'
+								colorScheme={colorScheme}
 								icon={<Icon size={18} />}
 								onClick={() => router.push(to)}
 							/>

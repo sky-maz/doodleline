@@ -12,8 +12,15 @@ const CUSTOMIZE_MODAL = {
 	COLOR_LABEL: 'cm_color_label',
 	COLOR_TEST_ID: 'color_selector',
 	COLOR_OPTIONS: [
-		{ name: 'Black', value: '#000000' },
-		{ name: 'White', value: '#FFFFFF' },
+		{ name: 'Red', value: 'red' },
+		{ name: 'Orange', value: 'orange' },
+		{ name: 'Yellow', value: 'yellow' },
+		{ name: 'Green', value: 'green' },
+		{ name: 'Teal', value: 'teal' },
+		{ name: 'Blue', value: 'blue' },
+		{ name: 'Cyan', value: 'cyan' },
+		{ name: 'Purple', value: 'purple' },
+		{ name: 'Pink', value: 'pink' },
 	],
 };
 

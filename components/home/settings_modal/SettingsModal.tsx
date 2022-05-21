@@ -22,7 +22,11 @@ import { FaCheckCircle, FaCloudUploadAlt } from 'react-icons/fa';
 import SETTINGS_MODAL from './SettingsModal.constants';
 import { useHomeContext } from '@components/home/home_provider/HomeProvider';
 
-const SettingsModal: FC = () => {
+interface SettingsModalProps {
+	colorScheme: string;
+}
+
+const SettingsModal: FC<SettingsModalProps> = ({ colorScheme }) => {
 	const { PRACTICE_OPTIONS, TIMER_OPTIONS } = SETTINGS_MODAL;
 	const { t } = useTranslation('home');
 	const toast = useToast();
@@ -77,7 +81,6 @@ const SettingsModal: FC = () => {
 			blockScrollOnMount={true}
 			closeOnEsc={false}
 			closeOnOverlayClick={false}
-			colorScheme='teal'
 			motionPreset='slideInBottom'
 			size={isMd ? 'lg' : '4xl'}
 		>
@@ -99,6 +102,7 @@ const SettingsModal: FC = () => {
 							id='type'
 							data-testid={SETTINGS_MODAL.PRACTICE_TEST_ID}
 							aria-label={t(SETTINGS_MODAL.PRACTICE_ARIA)}
+							colorScheme={colorScheme}
 							size='lg'
 							value={type}
 							onChange={(e) => setType(e.target.value)}
@@ -118,6 +122,7 @@ const SettingsModal: FC = () => {
 							id='timer'
 							data-testid={SETTINGS_MODAL.TIMER_TEST_ID}
 							aria-label={t(SETTINGS_MODAL.TIMER_ARIA)}
+							colorScheme={colorScheme}
 							size='lg'
 							value={timer}
 							onChange={(e) => setTimer(parseInt(e.target.value))}
@@ -180,7 +185,7 @@ const SettingsModal: FC = () => {
 								id='random'
 								data-testid={SETTINGS_MODAL.RANDOM_TEST_ID}
 								aria-label={t(SETTINGS_MODAL.RANDOM_ARIA)}
-								colorScheme='teal'
+								colorScheme={colorScheme}
 								checked={shuffle}
 								onChange={() => setShuffle(!shuffle)}
 							/>
@@ -192,7 +197,7 @@ const SettingsModal: FC = () => {
 						isFullWidth
 						data-testid={SETTINGS_MODAL.BTN_TEST_ID}
 						aria-label={t(SETTINGS_MODAL.BTN_ARIA)}
-						colorScheme='teal'
+						colorScheme={colorScheme}
 						onClick={onSubmit}
 					>
 						{t(SETTINGS_MODAL.BTN_TEXT)}

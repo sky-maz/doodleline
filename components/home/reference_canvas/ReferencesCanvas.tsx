@@ -13,14 +13,17 @@ import {
 	Heading,
 	Tooltip,
 } from '@chakra-ui/react';
-import { FaPlus, FaMinus } from 'react-icons/fa';
 import { MdClear, MdGrid4X4, MdRedo, MdUndo } from 'react-icons/md';
 import { setReader } from '@utils/reader';
 
 import REFERENCES_CANVAS from './ReferencesCanvas.constants';
 import { useHomeContext } from '@components/home/home_provider/HomeProvider';
 
-const ReferencesCanvas: FC = () => {
+interface ReferenceCanvasProps {
+	colorScheme: string;
+}
+
+const ReferencesCanvas: FC<ReferenceCanvasProps> = ({ colorScheme }) => {
 	const { t } = useTranslation('home');
 	const [grid, setGrid] = useState<boolean>(false);
 	const [rotation, setRotation] = useState<number>(0);
@@ -103,7 +106,7 @@ const ReferencesCanvas: FC = () => {
 							<IconButton
 								data-testid={REFERENCES_CANVAS.TOGGLE_GRID_TEST_ID}
 								aria-label={t(REFERENCES_CANVAS.TOGGLE_GRID_ARIA)}
-								colorScheme={grid ? 'green' : undefined}
+								colorScheme={grid ? colorScheme : undefined}
 								icon={<MdGrid4X4 />}
 								onClick={() => setGrid(!grid)}
 							/>
@@ -141,14 +144,13 @@ const ReferencesCanvas: FC = () => {
 								onClick={() => setRotation(rotation - 45)}
 							/>
 						</Tooltip>
-						<FaPlus color='green' />
 						<Slider
 							data-testid={REFERENCES_CANVAS.ZOOM_TEST_ID}
 							aria-label={t(REFERENCES_CANVAS.ZOOM_ARIA)}
+							colorScheme={colorScheme}
 							size='lg'
 							orientation='vertical'
 							minH='20em'
-							colorScheme='green'
 							min={25}
 							max={150}
 							value={zoom}
@@ -159,7 +161,6 @@ const ReferencesCanvas: FC = () => {
 							</SliderTrack>
 							<SliderThumb />
 						</Slider>
-						<FaMinus color='green' />
 					</Flex>
 				</>
 			) : (

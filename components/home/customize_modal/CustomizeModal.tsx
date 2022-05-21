@@ -17,14 +17,23 @@ import {
 	Text,
 	Select,
 	Switch,
+	Flex,
+	Button,
 } from '@chakra-ui/react';
 import { FaGlobe, FaMoon, FaPalette, FaSun } from 'react-icons/fa';
 
 import CUSTOMIZE_MODAL from './CustomizeModal.constants';
 import { useHomeContext } from '@components/home/home_provider/HomeProvider';
 
-// TODO: Add dynamic and persistent colors
-const CustomizeModal: FC = () => {
+interface CustomizeModalProps {
+	colorScheme: string;
+	onChangeColorScheme: (color: string) => void;
+}
+
+const CustomizeModal: FC<CustomizeModalProps> = ({
+	colorScheme,
+	onChangeColorScheme,
+}) => {
 	const router = useRouter();
 	const { t } = useTranslation('home');
 	const [isMd] = useMediaQuery('(min-width: 768px)');
@@ -48,7 +57,6 @@ const CustomizeModal: FC = () => {
 			isOpen={showCustomize}
 			onClose={() => dispatch(toggleCustomize())}
 			isCentered={true}
-			colorScheme='teal'
 			motionPreset='slideInBottom'
 			size={isMd ? 'lg' : '4xl'}
 		>
@@ -81,6 +89,7 @@ const CustomizeModal: FC = () => {
 						<Select
 							id='language'
 							data-testid={CUSTOMIZE_MODAL.LANGUAGE_TEST_ID}
+							colorScheme={colorScheme}
 							size='sm'
 							w='15em'
 							value={language}
@@ -111,7 +120,7 @@ const CustomizeModal: FC = () => {
 						<Switch
 							id='theme-mode'
 							data-testid={CUSTOMIZE_MODAL.MODE_TEST_ID}
-							colorScheme='green'
+							colorScheme={colorScheme}
 							isChecked={isDark}
 							onChange={toggleColorMode}
 						/>
@@ -127,6 +136,19 @@ const CustomizeModal: FC = () => {
 							<FaPalette />
 							<Text>{t(CUSTOMIZE_MODAL.COLOR_LABEL)}</Text>
 						</FormLabel>
+						<Flex flexWrap='wrap' gap={4} margin='1em 0em'>
+							{CUSTOMIZE_MODAL.COLOR_OPTIONS.map((color) => (
+								<Button
+									isActive={colorScheme === color.value}
+									key={color.value}
+									colorScheme={color.value}
+									h='3em'
+									w='3em'
+									borderRadius='50%'
+									onClick={() => onChangeColorScheme(color.value)}
+								/>
+							))}
+						</Flex>
 					</FormControl>
 				</ModalBody>
 				<ModalFooter />

@@ -5,7 +5,12 @@ import { getServerSideProps } from '@utils/server_side_props';
 
 import HomeView from '@components/home';
 
-const HomePage: NextPage = () => {
+interface HomePageProps {
+	colorMode: string;
+	colorScheme: string;
+}
+
+const HomePage: NextPage<HomePageProps> = (props) => {
 	return (
 		<>
 			<Head>
@@ -14,7 +19,7 @@ const HomePage: NextPage = () => {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<HomeView />
+			<HomeView {...props} />
 		</>
 	);
 };

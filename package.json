@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "prepare": "husky install",
     "check:format": "prettier --check .",
     "check:lint": "eslint . --ext ts --ext tsx",
     "check:types": "tsc --pretty --noEmit",
@@ -22,6 +21,7 @@
     "framer-motion": "^6.2.8",
     "lodash": "^4.17.21",
     "next": "12.1.4",
+    "next-cookies": "^2.0.3",
     "next-translate": "^1.4.0",
     "paper": "^0.12.15",
     "react": "18.0.0",
@@ -49,7 +49,6 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
-    "husky": "^7.0.4",
     "jest": "^27.5.1",
     "typescript": "4.6.3"
   }
